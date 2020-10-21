@@ -1,4 +1,4 @@
-package ru.blogspot.toolkas.telegram.bot.echo;
+package school2107.bot;
 
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
