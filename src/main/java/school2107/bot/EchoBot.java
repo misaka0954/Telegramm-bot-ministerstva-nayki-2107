@@ -16,7 +16,7 @@ public class EchoBot extends TelegramLongPollingBot {
      */
     @Override
     public String getBotToken() {
-        return "сюда вставьте токен от BotFather";
+        return "1268306799:AAFZyRy0wtPpUj0NlTcl0_5bHNmh9vpvlio";
     }
 
     /**
@@ -27,23 +27,15 @@ public class EchoBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         try {
             //проверяем есть ли сообщение и текстовое ли оно
-            if (update.hasMessage() && update.getMessage().hasText()) {
-                //Извлекаем объект входящего сообщения
-                Message inMessage = update.getMessage();
-                //Создаем исходящее сообщение
-                SendMessage outMessage = new SendMessage();
-                //Указываем в какой чат будем отправлять сообщение
-                //(в тот же чат, откуда пришло входящее сообщение)
-                outMessage.setChatId(inMessage.getChatId());
-                //Указываем текст сообщения
-                outMessage.setText(inMessage.getText());
-                //Отправляем сообщение
-                execute(outMessage);
+            if (update.hasMessage() && update.getMessage().hasText()&&update.getMessage().getText().equals("/start")) {
+            SendMessage msg=Handler.mainMenu();
             }
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
     }
+
+
 
     /**
      * Метод, который возвращает имя пользователя бота.
@@ -51,6 +43,6 @@ public class EchoBot extends TelegramLongPollingBot {
      */
     @Override
     public String getBotUsername() {
-        return "<сюда вставьте имя пользователя бота>";
+        return "baka";
     }
 }
