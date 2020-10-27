@@ -6,10 +6,13 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+
+
 /**
  * Класс-обработчик поступающих к боту сообщений.
  */
 public class EchoBot extends TelegramLongPollingBot {
+
     /**
      * Метод, который возвращает токен, выданный нам ботом @BotFather.
      * @return токен
@@ -27,8 +30,17 @@ public class EchoBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         try {
             //проверяем есть ли сообщение и текстовое ли оно
-            if (update.hasMessage() && update.getMessage().hasText()&&update.getMessage().getText().equals("/start")) {
+            if (update.hasMessage() && update.getMessage().hasText()) {
             SendMessage msg=Handler.mainMenu();
+            msg.setChatId(update.getMessage().getChatId());
+            execute(msg);
+            }
+            if (update.hasCallbackQuery()&&update.getCallbackQuery().getId()!=null){
+                SendMessage msg=Handler.router(update.getCallbackQuery());
+                Long chatId=update.getCallbackQuery().getMessage().getChatId();
+                msg.setChatId(chatId);
+                execute(msg);
+
             }
         } catch (TelegramApiException e) {
             e.printStackTrace();
