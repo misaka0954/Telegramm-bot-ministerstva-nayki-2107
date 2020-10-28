@@ -26,6 +26,12 @@ public static List<List<InlineKeyboardButton>> buttonsMenu =new ArrayList<>();
         line =new ArrayList<>();
         line.add(new InlineKeyboardButton().setText("ЕГЭ").setCallbackData("3"));
         buttons.add(line);
+        line =new ArrayList<>();
+        line.add(new InlineKeyboardButton().setText("Ресурсы школы").setCallbackData("4"));
+        buttons.add(line);
+        line =new ArrayList<>();
+        line.add(new InlineKeyboardButton().setText("Полезные ссылки").setCallbackData("5"));
+        buttons.add(line);
         kbd.setKeyboard(buttons);
         msg.setReplyMarkup(kbd);
         buttonsMenu=buttons;
@@ -35,12 +41,114 @@ public static List<List<InlineKeyboardButton>> buttonsMenu =new ArrayList<>();
     public static SendMessage router(CallbackQuery cbq) {
         String id= cbq.getData();
         switch(id){
+            case "0":
+                InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
+                kbd.setKeyboard(buttonsMenu);
+                return new SendMessage().setText("Главное меню:").setReplyMarkup(kbd);
             case "1":
                 return olimpiads();
+            case "11":
+            case "12":
+                return classChooser(cbq);
+            case "2":
+                return oge();
+            case "3":
+                return ege();
+            case "4":
+                return schSources();
+            case "5":
+                return infRes();
+
         }
         InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
         kbd.setKeyboard(buttonsMenu);
         return new SendMessage().setText("Эта функция в разработке. Выберите пункт из меню:").setReplyMarkup(kbd);
+    }
+
+    private static SendMessage schSources() {
+        SendMessage msg=new SendMessage();
+        msg.setText("Ресурсы школы");
+        InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> buttons =new ArrayList<>();
+        List<InlineKeyboardButton> line =new ArrayList<>();
+        line.add(new InlineKeyboardButton().setText("Сайт школы").setUrl("https://sch2107.mskobr.ru/"));
+        buttons.add(line);
+        line =new ArrayList<>();
+        line.add(new InlineKeyboardButton().setText("Ютуб школы").setUrl("https://www.youtube.com/channel/UCGzMXQcu9o7L1Hb_kxscw2g"));
+        buttons.add(line);
+        line =new ArrayList<>();
+        line.add(new InlineKeyboardButton().setText("Инстаграмм старшей школы").setUrl("https://www.instagram.com/2107school/"));
+        buttons.add(line);
+
+        line =new ArrayList<>();
+        line.add(new InlineKeyboardButton().setText("Назад в меню").setCallbackData("0"));
+        buttons.add(line);
+        kbd.setKeyboard(buttons);
+        msg.setReplyMarkup(kbd);
+        return msg;
+    }
+
+    private static SendMessage infRes() {
+        SendMessage msg=new SendMessage();
+        msg.setText("Ссылки на образовательные порталы");
+        InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> buttons =new ArrayList<>();
+        List<InlineKeyboardButton> line =new ArrayList<>();
+        line.add(new InlineKeyboardButton().setText("Сайт 1").setUrl("https://google.com/"));
+        buttons.add(line);
+        line =new ArrayList<>();
+        line.add(new InlineKeyboardButton().setText("Сайт 2").setUrl("https://google.com/"));
+        buttons.add(line);
+        line =new ArrayList<>();
+        line.add(new InlineKeyboardButton().setText("Сайт 3").setUrl("https://google.com/"));
+        buttons.add(line);
+
+        line =new ArrayList<>();
+        line.add(new InlineKeyboardButton().setText("Назад в меню").setCallbackData("0"));
+        buttons.add(line);
+        kbd.setKeyboard(buttons);
+        msg.setReplyMarkup(kbd);
+        return msg;
+    }
+
+    private static SendMessage ege() {
+        SendMessage msg=new SendMessage();
+        msg.setText("Меню ЕГЭ");
+        InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> buttons =new ArrayList<>();
+        List<InlineKeyboardButton> line =new ArrayList<>();
+        line.add(new InlineKeyboardButton().setText("Подписаться на рассылку").setCallbackData("31"));
+        buttons.add(line);
+        line =new ArrayList<>();
+        line.add(new InlineKeyboardButton().setText("Отписаться от расссылки").setCallbackData("32"));
+        buttons.add(line);
+
+        line =new ArrayList<>();
+        line.add(new InlineKeyboardButton().setText("Назад в меню").setCallbackData("0"));
+        buttons.add(line);
+        kbd.setKeyboard(buttons);
+        msg.setReplyMarkup(kbd);
+        return msg;
+    }
+
+    private static SendMessage oge() {
+        SendMessage msg=new SendMessage();
+        msg.setText("Меню ОГЭ");
+        InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> buttons =new ArrayList<>();
+        List<InlineKeyboardButton> line =new ArrayList<>();
+        line.add(new InlineKeyboardButton().setText("Подписаться на рассылку").setCallbackData("21"));
+        buttons.add(line);
+        line =new ArrayList<>();
+        line.add(new InlineKeyboardButton().setText("Отписаться от расссылки").setCallbackData("22"));
+        buttons.add(line);
+
+        line =new ArrayList<>();
+        line.add(new InlineKeyboardButton().setText("Назад в меню").setCallbackData("0"));
+        buttons.add(line);
+        kbd.setKeyboard(buttons);
+        msg.setReplyMarkup(kbd);
+        return msg;
     }
 
     private static SendMessage olimpiads() {
@@ -56,6 +164,28 @@ public static List<List<InlineKeyboardButton>> buttonsMenu =new ArrayList<>();
         buttons.add(line);
         line =new ArrayList<>();
         line.add(new InlineKeyboardButton().setText("Близжайшая олимпиада").setCallbackData("13"));
+        buttons.add(line);
+
+        line =new ArrayList<>();
+        line.add(new InlineKeyboardButton().setText("Назад в меню").setCallbackData("0"));
+        buttons.add(line);
+        kbd.setKeyboard(buttons);
+        msg.setReplyMarkup(kbd);
+        return msg;
+    }
+    public static SendMessage classChooser(CallbackQuery query){
+        SendMessage msg=new SendMessage();
+        InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> buttons =new ArrayList<>();
+        List<InlineKeyboardButton> line =new ArrayList<>();
+        int i=5;
+        while(i<12){
+            line.add(new InlineKeyboardButton().setText(""+i).setCallbackData(query.getData()+i));
+            buttons.add(line);
+            line =new ArrayList<>();
+            i++;
+        }
+        line.add(new InlineKeyboardButton().setText("Назад в меню").setCallbackData("0"));
         buttons.add(line);
         kbd.setKeyboard(buttons);
         msg.setReplyMarkup(kbd);
