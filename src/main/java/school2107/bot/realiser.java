@@ -10,7 +10,7 @@ public class realiser {
         try{
            Class.forName(DB_Driver);
            connection=DriverManager.getConnection(DB_URL);
-            System.out.print("\nПодключение к субд прошло успешно");
+            System.out.print("\nПодключение к субд прошло успешно\n");
 
         }catch(ClassNotFoundException e){
             System.out.print("\ncnf");
@@ -28,7 +28,7 @@ public class realiser {
             System.out.println("Таблица ЕГЭ существует");
 
         }catch(SQLException e){
-            createTable("ege");
+            createTableOE("ege");
             System.out.println("Таблица ЕГЭ сгенерирована");
 
         }
@@ -38,15 +38,37 @@ public class realiser {
             System.out.println("Таблица ОГЭ существует");
 
         }catch(SQLException e){
-            createTable("oge");
+            createTableOE("oge");
             System.out.println("Таблица ОГЭ сгенерирована");
 
         }
-    }
-    public void createTable(String name){
         try {
             Statement s = connection.createStatement();
-            s.executeUpdate("CREATE TABLE "+name+" (id INTEGER not NULL AUTO_INCREMENT, ");
+            ResultSet rs = s.executeQuery("SELECT * FROM errhandler");
+            System.out.println("Таблица errhandler существует");
+
+        }catch(SQLException e){
+            createTableOE("errhandler");
+            System.out.println("Таблица errhander сгенерирована");
+
+        }
+        addMemberOE(1l,"tst",0);
+    }
+    public void createTableOE(String name){
+        try {
+            Statement s = connection.createStatement();
+            s.executeUpdate("CREATE TABLE "+name+" (uid LONG not NULL, sbt VARCHAR(3) not NULL)");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    public void addMemberOE(Long uid, String sbt,int oe){
+        String table="errhandler";
+        if(oe==2){table="oge";}
+        if(oe==3){table="ege";}
+        try {
+            Statement s = connection.createStatement();
+            s.execute("INSERT INTO "+table+" VALUES ("+uid+",'"+sbt+"')");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
