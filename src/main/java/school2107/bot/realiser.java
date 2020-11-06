@@ -53,6 +53,7 @@ public class realiser {
 
         }
         addMemberOE(1l,"tst",0);
+        rmMemberOE(1l,"tst",0);
     }
     public void createTableOE(String name){
         try {
@@ -69,6 +70,17 @@ public class realiser {
         try {
             Statement s = connection.createStatement();
             s.execute("INSERT INTO "+table+" VALUES ("+uid+",'"+sbt+"')");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    public void rmMemberOE(Long uid, String sbt,int oe){
+        String table="errhandler";
+        if(oe==2){table="oge";}
+        if(oe==3){table="ege";}
+        try {
+            Statement s = connection.createStatement();
+            s.execute("DELETE FROM "+table+" WHERE UID="+uid+" AND sbt='"+sbt+"'");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
