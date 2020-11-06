@@ -40,6 +40,7 @@ public static List<List<InlineKeyboardButton>> buttonsMenu =new ArrayList<>();
 
     public static SendMessage router(CallbackQuery cbq) {
         String id= cbq.getData();
+        if((id.startsWith("21")||id.startsWith("31"))&&id.length()>2){return subjectPushOgeEge(cbq);}
         switch(id){
             case "0":
                 InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
@@ -191,6 +192,22 @@ public static List<List<InlineKeyboardButton>> buttonsMenu =new ArrayList<>();
             line =new ArrayList<>();
             i++;
         }
+        line.add(new InlineKeyboardButton().setText("Назад в меню").setCallbackData("0"));
+        buttons.add(line);
+        kbd.setKeyboard(buttons);
+        msg.setReplyMarkup(kbd);
+        return msg;
+    }
+    public static SendMessage subjectPushOgeEge(CallbackQuery query){
+        int type=0;
+        if(query.getData().startsWith("2")){type=2;}
+        if(query.getData().startsWith("3")){type=3;}
+        App.realiser.addMemberOE(query.getMessage().getChatId(),query.getData().substring(1),type);
+        SendMessage msg=new SendMessage();
+        msg.setText("Успешно");
+        InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> buttons =new ArrayList<>();
+        List<InlineKeyboardButton> line =new ArrayList<>();
         line.add(new InlineKeyboardButton().setText("Назад в меню").setCallbackData("0"));
         buttons.add(line);
         kbd.setKeyboard(buttons);
