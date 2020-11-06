@@ -5,11 +5,14 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
 public class App {
-
+public static realiser realiser;
     public static void main(String[] args) throws TelegramApiRequestException {
+        realiser=new realiser();
         ApiContextInitializer.init();
 
         TelegramBotsApi botsApi = new TelegramBotsApi();
         botsApi.registerBot(new EchoBot());
+        Handler.mainMenu();
+
     }
 }

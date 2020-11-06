@@ -54,6 +54,11 @@ public static List<List<InlineKeyboardButton>> buttonsMenu =new ArrayList<>();
                 return oge();
             case "3":
                 return ege();
+            case "21":
+            case "22":
+            case "31":
+            case "32":
+                return subjectChooseOgeEge(cbq);
             case "4":
                 return schSources();
             case "5":
@@ -175,6 +180,7 @@ public static List<List<InlineKeyboardButton>> buttonsMenu =new ArrayList<>();
     }
     public static SendMessage classChooser(CallbackQuery query){
         SendMessage msg=new SendMessage();
+        msg.setText("Выберите ваш класс");
         InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> buttons =new ArrayList<>();
         List<InlineKeyboardButton> line =new ArrayList<>();
@@ -185,6 +191,93 @@ public static List<List<InlineKeyboardButton>> buttonsMenu =new ArrayList<>();
             line =new ArrayList<>();
             i++;
         }
+        line.add(new InlineKeyboardButton().setText("Назад в меню").setCallbackData("0"));
+        buttons.add(line);
+        kbd.setKeyboard(buttons);
+        msg.setReplyMarkup(kbd);
+        return msg;
+    }
+    public static SendMessage subjectChooseOgeEge(CallbackQuery query){
+        SendMessage msg=new SendMessage();
+        msg.setText("Выберите предмет");
+        InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> buttons =new ArrayList<>();
+        List<InlineKeyboardButton> line =new ArrayList<>();
+        //деление математики по уровню сложности
+        if(query.getData().startsWith("2")){
+            line.add(new InlineKeyboardButton().setText("Математика").setCallbackData(query.getData() + "math"));
+            buttons.add(line);
+            line = new ArrayList<>();
+        }
+        else{
+            line.add(new InlineKeyboardButton().setText("Математика (Базовая)").setCallbackData(query.getData() + "mathb"));
+            buttons.add(line);
+            line = new ArrayList<>();
+
+            line.add(new InlineKeyboardButton().setText("Математика (Профильная)").setCallbackData(query.getData() + "mathp"));
+            buttons.add(line);
+            line = new ArrayList<>();
+        }
+        if(true) {
+
+            line.add(new InlineKeyboardButton().setText("Русский язык").setCallbackData(query.getData() + "rus"));
+            buttons.add(line);
+            line = new ArrayList<>();
+
+            line.add(new InlineKeyboardButton().setText("Литература").setCallbackData(query.getData() + "lit"));
+            buttons.add(line);
+            line = new ArrayList<>();
+
+            line.add(new InlineKeyboardButton().setText("Физика").setCallbackData(query.getData() + "fiz"));
+            buttons.add(line);
+            line = new ArrayList<>();
+
+            line.add(new InlineKeyboardButton().setText("Химия").setCallbackData(query.getData() + "him"));
+            buttons.add(line);
+            line = new ArrayList<>();
+
+            line.add(new InlineKeyboardButton().setText("Биология").setCallbackData(query.getData() + "bio"));
+            buttons.add(line);
+            line = new ArrayList<>();
+
+            line.add(new InlineKeyboardButton().setText("География").setCallbackData(query.getData() + "geo"));
+            buttons.add(line);
+            line = new ArrayList<>();
+
+            line.add(new InlineKeyboardButton().setText("История").setCallbackData(query.getData() + "ist"));
+            buttons.add(line);
+            line = new ArrayList<>();
+
+            line.add(new InlineKeyboardButton().setText("Обществознание").setCallbackData(query.getData() + "obs"));
+            buttons.add(line);
+            line = new ArrayList<>();
+
+            line.add(new InlineKeyboardButton().setText("Информатика и ИКТ").setCallbackData(query.getData() + "ikt"));
+            buttons.add(line);
+            line = new ArrayList<>();
+
+            line.add(new InlineKeyboardButton().setText("Английский язык").setCallbackData(query.getData() + "eng"));
+            buttons.add(line);
+            line = new ArrayList<>();
+
+            line.add(new InlineKeyboardButton().setText("Немецкий язык").setCallbackData(query.getData() + "nem"));
+            buttons.add(line);
+            line = new ArrayList<>();
+
+            line.add(new InlineKeyboardButton().setText("Французский язык").setCallbackData(query.getData() + "fra"));
+            buttons.add(line);
+            line = new ArrayList<>();
+
+            line.add(new InlineKeyboardButton().setText("Испанский язык").setCallbackData(query.getData() + "isp"));
+            buttons.add(line);
+            line = new ArrayList<>();
+            if(query.getData().startsWith("3")){
+            line.add(new InlineKeyboardButton().setText("Китайский язык").setCallbackData(query.getData() + "kit"));
+            buttons.add(line);
+            line = new ArrayList<>();}
+
+        }
+
         line.add(new InlineKeyboardButton().setText("Назад в меню").setCallbackData("0"));
         buttons.add(line);
         kbd.setKeyboard(buttons);

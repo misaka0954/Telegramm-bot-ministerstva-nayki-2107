@@ -1,0 +1,4 @@
+2020-11-05 21:43:51 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "EGE" не найдена
+Table "EGE" not found; SQL statement:
+SELECT * FROM ege [42102-200]
