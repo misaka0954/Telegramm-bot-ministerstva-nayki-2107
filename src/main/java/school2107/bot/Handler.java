@@ -214,6 +214,22 @@ public static List<List<InlineKeyboardButton>> buttonsMenu =new ArrayList<>();
         msg.setReplyMarkup(kbd);
         return msg;
     }
+    public static SendMessage subjectRemoveOgeEge(CallbackQuery query){
+        int type=0;
+        if(query.getData().startsWith("2")){type=2;}
+        if(query.getData().startsWith("3")){type=3;}
+        App.realiser.rmMemberOE(query.getMessage().getChatId(),query.getData().substring(1),type);
+        SendMessage msg=new SendMessage();
+        msg.setText("Успешно");
+        InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> buttons =new ArrayList<>();
+        List<InlineKeyboardButton> line =new ArrayList<>();
+        line.add(new InlineKeyboardButton().setText("Назад в меню").setCallbackData("0"));
+        buttons.add(line);
+        kbd.setKeyboard(buttons);
+        msg.setReplyMarkup(kbd);
+        return msg;
+    }
     public static SendMessage subjectChooseOgeEge(CallbackQuery query){
         SendMessage msg=new SendMessage();
         msg.setText("Выберите предмет");
