@@ -29,18 +29,18 @@ public class EchoBot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         try {
+            //TODO создать админский интерфейс
             //проверяем есть ли сообщение и текстовое ли оно
-            if (update.hasMessage() && update.getMessage().hasText()) {
+            if (update.hasMessage() && update.getMessage().hasText() && !update.getMessage().getText().equalsIgnoreCase("admin mod")) {
             SendMessage msg=Handler.mainMenu();
             msg.setChatId(update.getMessage().getChatId());
             execute(msg);
             }
-            if (update.hasCallbackQuery()&&update.getCallbackQuery().getId()!=null){
+            if (update.hasCallbackQuery()&&update.getCallbackQuery().getId()!=null&&!update.getCallbackQuery().getData().startsWith("a")){
                 SendMessage msg=Handler.router(update.getCallbackQuery());
                 Long chatId=update.getCallbackQuery().getMessage().getChatId();
                 msg.setChatId(chatId);
                 execute(msg);
-
             }
         } catch (TelegramApiException e) {
             e.printStackTrace();

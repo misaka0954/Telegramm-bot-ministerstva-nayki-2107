@@ -1,6 +1,7 @@
 package school2107.bot;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class realiser {
   public static final String DB_URL="jdbc:h2:./t";
@@ -53,7 +54,11 @@ public class realiser {
 
         }
         addMemberOE(1l,"tst",0);
+        addMemberOE(2l,"tst",0);
+        addMemberOE(3l,"tst",0);
+        getMemberOE("tst",0);
         rmMemberOE(1l,"tst",0);
+        getMemberOE("tst",0);
     }
     public void createTableOE(String name){
         try {
@@ -84,5 +89,23 @@ public class realiser {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+    public ArrayList<Long> getMemberOE(String sbt,int oe){
+        String table="errhandler";
+        if(oe==2){table="oge";}
+        if(oe==3){table="ege";}
+        ArrayList<Long> rtn = new ArrayList<>();
+        try {
+            Statement s = connection.createStatement();
+            ResultSet rs = s.executeQuery("SELECT SBT="+sbt+" FROM "+table);
+
+            while(rs.next()){
+                rtn.add(rs.getLong("uid"));
+                System.out.println(rs.getLong("uid"));
+            }
+        }catch(SQLException e){
+
+        }
+        return rtn;
     }
 }

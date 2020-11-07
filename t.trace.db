@@ -1,117 +1,184 @@
-2020-11-06 22:40:14 jdbc[3]: exception
+2020-11-06 23:30:47 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "EGE" не найдена
 Table "EGE" not found; SQL statement:
 SELECT * FROM ege [42102-200]
-2020-11-06 22:40:14 jdbc[3]: exception
+2020-11-06 23:30:47 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "OGE" не найдена
 Table "OGE" not found; SQL statement:
 SELECT * FROM oge [42102-200]
-2020-11-06 22:40:14 jdbc[3]: exception
+2020-11-06 23:30:47 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "ERRHANDLER" не найдена
 Table "ERRHANDLER" not found; SQL statement:
 SELECT * FROM errhandler [42102-200]
-2020-11-06 22:40:14 jdbc[3]: exception
+2020-11-06 23:42:21 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Столбец "TST" не найден
 Column "TST" not found; SQL statement:
-INSERT INTO errhandler VALUES(1,tst) [42122-200]
+SELECT SBT=tst FROM errhandler [42122-200]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:453)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
 	at org.h2.message.DbException.get(DbException.java:205)
 	at org.h2.message.DbException.get(DbException.java:181)
 	at org.h2.expression.ExpressionColumn.getColumnException(ExpressionColumn.java:163)
 	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:145)
-	at org.h2.command.dml.Insert.prepare(Insert.java:327)
+	at org.h2.expression.condition.Comparison.optimize(Comparison.java:191)
+	at org.h2.command.dml.Select.prepare(Select.java:1206)
 	at org.h2.command.Parser.prepareCommand(Parser.java:744)
 	at org.h2.engine.Session.prepareLocal(Session.java:657)
 	at org.h2.engine.Session.prepareCommand(Session.java:595)
 	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1235)
-	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:212)
-	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:201)
-	at school2107.bot.realiser.addMemberOE(realiser.java:71)
-	at school2107.bot.realiser.assertTables(realiser.java:55)
-	at school2107.bot.realiser.<init>(realiser.java:22)
+	at org.h2.jdbc.JdbcStatement.executeQuery(JdbcStatement.java:78)
+	at school2107.bot.realiser.getMemberOE(realiser.java:100)
+	at school2107.bot.realiser.assertTables(realiser.java:59)
+	at school2107.bot.realiser.<init>(realiser.java:23)
 	at school2107.bot.App.main(App.java:10)
-2020-11-06 22:42:57 jdbc[3]: exception
+2020-11-06 23:42:21 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Столбец "TST" не найден
 Column "TST" not found; SQL statement:
-INSERT INTO errhandler (uid,sbt) VALUES(1,tst) [42122-200]
+SELECT SBT=tst FROM errhandler [42122-200]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:453)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
 	at org.h2.message.DbException.get(DbException.java:205)
 	at org.h2.message.DbException.get(DbException.java:181)
 	at org.h2.expression.ExpressionColumn.getColumnException(ExpressionColumn.java:163)
 	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:145)
-	at org.h2.command.dml.Insert.prepare(Insert.java:327)
+	at org.h2.expression.condition.Comparison.optimize(Comparison.java:191)
+	at org.h2.command.dml.Select.prepare(Select.java:1206)
 	at org.h2.command.Parser.prepareCommand(Parser.java:744)
 	at org.h2.engine.Session.prepareLocal(Session.java:657)
 	at org.h2.engine.Session.prepareCommand(Session.java:595)
 	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1235)
-	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:212)
-	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:201)
-	at school2107.bot.realiser.addMemberOE(realiser.java:71)
-	at school2107.bot.realiser.assertTables(realiser.java:55)
-	at school2107.bot.realiser.<init>(realiser.java:22)
+	at org.h2.jdbc.JdbcStatement.executeQuery(JdbcStatement.java:78)
+	at school2107.bot.realiser.getMemberOE(realiser.java:100)
+	at school2107.bot.realiser.assertTables(realiser.java:61)
+	at school2107.bot.realiser.<init>(realiser.java:23)
 	at school2107.bot.App.main(App.java:10)
-2020-11-06 22:43:25 jdbc[3]: exception
+2020-11-06 23:43:24 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Столбец "TST" не найден
 Column "TST" not found; SQL statement:
-INSERT INTO errhandler (uid,sbt) VALUES(1,tst) [42122-200]
+SELECT SBT=tst FROM errhandler [42122-200]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:453)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
 	at org.h2.message.DbException.get(DbException.java:205)
 	at org.h2.message.DbException.get(DbException.java:181)
 	at org.h2.expression.ExpressionColumn.getColumnException(ExpressionColumn.java:163)
 	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:145)
-	at org.h2.command.dml.Insert.prepare(Insert.java:327)
+	at org.h2.expression.condition.Comparison.optimize(Comparison.java:191)
+	at org.h2.command.dml.Select.prepare(Select.java:1206)
 	at org.h2.command.Parser.prepareCommand(Parser.java:744)
 	at org.h2.engine.Session.prepareLocal(Session.java:657)
 	at org.h2.engine.Session.prepareCommand(Session.java:595)
 	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1235)
-	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:212)
-	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:201)
-	at school2107.bot.realiser.addMemberOE(realiser.java:71)
-	at school2107.bot.realiser.assertTables(realiser.java:55)
-	at school2107.bot.realiser.<init>(realiser.java:22)
+	at org.h2.jdbc.JdbcStatement.executeQuery(JdbcStatement.java:78)
+	at school2107.bot.realiser.getMemberOE(realiser.java:100)
+	at school2107.bot.realiser.assertTables(realiser.java:59)
+	at school2107.bot.realiser.<init>(realiser.java:23)
 	at school2107.bot.App.main(App.java:10)
-2020-11-06 22:44:28 jdbc[3]: exception
+2020-11-06 23:43:24 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Столбец "TST" не найден
 Column "TST" not found; SQL statement:
-INSERT INTO errhandler (uid,sbt) VALUES (1,tst) [42122-200]
+SELECT SBT=tst FROM errhandler [42122-200]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:453)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
 	at org.h2.message.DbException.get(DbException.java:205)
 	at org.h2.message.DbException.get(DbException.java:181)
 	at org.h2.expression.ExpressionColumn.getColumnException(ExpressionColumn.java:163)
 	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:145)
-	at org.h2.command.dml.Insert.prepare(Insert.java:327)
+	at org.h2.expression.condition.Comparison.optimize(Comparison.java:191)
+	at org.h2.command.dml.Select.prepare(Select.java:1206)
 	at org.h2.command.Parser.prepareCommand(Parser.java:744)
 	at org.h2.engine.Session.prepareLocal(Session.java:657)
 	at org.h2.engine.Session.prepareCommand(Session.java:595)
 	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1235)
-	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:212)
-	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:201)
-	at school2107.bot.realiser.addMemberOE(realiser.java:71)
-	at school2107.bot.realiser.assertTables(realiser.java:55)
-	at school2107.bot.realiser.<init>(realiser.java:22)
+	at org.h2.jdbc.JdbcStatement.executeQuery(JdbcStatement.java:78)
+	at school2107.bot.realiser.getMemberOE(realiser.java:100)
+	at school2107.bot.realiser.assertTables(realiser.java:61)
+	at school2107.bot.realiser.<init>(realiser.java:23)
 	at school2107.bot.App.main(App.java:10)
-2020-11-06 22:45:05 jdbc[3]: exception
+2020-11-07 11:48:33 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Столбец "TST" не найден
 Column "TST" not found; SQL statement:
-INSERT INTO errhandler (uid,sbt) VALUES (1,tst) [42122-200]
+SELECT SBT=tst FROM errhandler [42122-200]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:453)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
 	at org.h2.message.DbException.get(DbException.java:205)
 	at org.h2.message.DbException.get(DbException.java:181)
 	at org.h2.expression.ExpressionColumn.getColumnException(ExpressionColumn.java:163)
 	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:145)
-	at org.h2.command.dml.Insert.prepare(Insert.java:327)
+	at org.h2.expression.condition.Comparison.optimize(Comparison.java:191)
+	at org.h2.command.dml.Select.prepare(Select.java:1206)
 	at org.h2.command.Parser.prepareCommand(Parser.java:744)
 	at org.h2.engine.Session.prepareLocal(Session.java:657)
 	at org.h2.engine.Session.prepareCommand(Session.java:595)
 	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1235)
-	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:212)
-	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:201)
-	at school2107.bot.realiser.addMemberOE(realiser.java:71)
-	at school2107.bot.realiser.assertTables(realiser.java:55)
-	at school2107.bot.realiser.<init>(realiser.java:22)
+	at org.h2.jdbc.JdbcStatement.executeQuery(JdbcStatement.java:78)
+	at school2107.bot.realiser.getMemberOE(realiser.java:100)
+	at school2107.bot.realiser.assertTables(realiser.java:59)
+	at school2107.bot.realiser.<init>(realiser.java:23)
+	at school2107.bot.App.main(App.java:10)
+2020-11-07 11:48:34 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Столбец "TST" не найден
+Column "TST" not found; SQL statement:
+SELECT SBT=tst FROM errhandler [42122-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:453)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	at org.h2.message.DbException.get(DbException.java:205)
+	at org.h2.message.DbException.get(DbException.java:181)
+	at org.h2.expression.ExpressionColumn.getColumnException(ExpressionColumn.java:163)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:145)
+	at org.h2.expression.condition.Comparison.optimize(Comparison.java:191)
+	at org.h2.command.dml.Select.prepare(Select.java:1206)
+	at org.h2.command.Parser.prepareCommand(Parser.java:744)
+	at org.h2.engine.Session.prepareLocal(Session.java:657)
+	at org.h2.engine.Session.prepareCommand(Session.java:595)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1235)
+	at org.h2.jdbc.JdbcStatement.executeQuery(JdbcStatement.java:78)
+	at school2107.bot.realiser.getMemberOE(realiser.java:100)
+	at school2107.bot.realiser.assertTables(realiser.java:61)
+	at school2107.bot.realiser.<init>(realiser.java:23)
+	at school2107.bot.App.main(App.java:10)
+2020-11-07 11:49:56 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Значение слишком длинное для поля "SBT VARCHAR(3)": "'1math' (5)"
+Value too long for column "SBT VARCHAR(3)": "'1math' (5)"; SQL statement:
+INSERT INTO oge VALUES (856555201,'1math') [22001-200]
+2020-11-07 11:52:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Столбец "TST" не найден
+Column "TST" not found; SQL statement:
+SELECT SBT=tst FROM errhandler [42122-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:453)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	at org.h2.message.DbException.get(DbException.java:205)
+	at org.h2.message.DbException.get(DbException.java:181)
+	at org.h2.expression.ExpressionColumn.getColumnException(ExpressionColumn.java:163)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:145)
+	at org.h2.expression.condition.Comparison.optimize(Comparison.java:191)
+	at org.h2.command.dml.Select.prepare(Select.java:1206)
+	at org.h2.command.Parser.prepareCommand(Parser.java:744)
+	at org.h2.engine.Session.prepareLocal(Session.java:657)
+	at org.h2.engine.Session.prepareCommand(Session.java:595)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1235)
+	at org.h2.jdbc.JdbcStatement.executeQuery(JdbcStatement.java:78)
+	at school2107.bot.realiser.getMemberOE(realiser.java:100)
+	at school2107.bot.realiser.assertTables(realiser.java:59)
+	at school2107.bot.realiser.<init>(realiser.java:23)
+	at school2107.bot.App.main(App.java:10)
+2020-11-07 11:52:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Столбец "TST" не найден
+Column "TST" not found; SQL statement:
+SELECT SBT=tst FROM errhandler [42122-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:453)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	at org.h2.message.DbException.get(DbException.java:205)
+	at org.h2.message.DbException.get(DbException.java:181)
+	at org.h2.expression.ExpressionColumn.getColumnException(ExpressionColumn.java:163)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:145)
+	at org.h2.expression.condition.Comparison.optimize(Comparison.java:191)
+	at org.h2.command.dml.Select.prepare(Select.java:1206)
+	at org.h2.command.Parser.prepareCommand(Parser.java:744)
+	at org.h2.engine.Session.prepareLocal(Session.java:657)
+	at org.h2.engine.Session.prepareCommand(Session.java:595)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1235)
+	at org.h2.jdbc.JdbcStatement.executeQuery(JdbcStatement.java:78)
+	at school2107.bot.realiser.getMemberOE(realiser.java:100)
+	at school2107.bot.realiser.assertTables(realiser.java:61)
+	at school2107.bot.realiser.<init>(realiser.java:23)
 	at school2107.bot.App.main(App.java:10)

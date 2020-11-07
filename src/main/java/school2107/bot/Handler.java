@@ -198,11 +198,12 @@ public static List<List<InlineKeyboardButton>> buttonsMenu =new ArrayList<>();
         msg.setReplyMarkup(kbd);
         return msg;
     }
+    //TODO обьеденить методы
     public static SendMessage subjectPushOgeEge(CallbackQuery query){
         int type=0;
         if(query.getData().startsWith("2")){type=2;}
         if(query.getData().startsWith("3")){type=3;}
-        App.realiser.addMemberOE(query.getMessage().getChatId(),query.getData().substring(1),type);
+        App.realiser.addMemberOE(query.getMessage().getChatId(),query.getData().substring(2),type);
         SendMessage msg=new SendMessage();
         msg.setText("Успешно");
         InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
@@ -214,11 +215,13 @@ public static List<List<InlineKeyboardButton>> buttonsMenu =new ArrayList<>();
         msg.setReplyMarkup(kbd);
         return msg;
     }
+
+
     public static SendMessage subjectRemoveOgeEge(CallbackQuery query){
         int type=0;
         if(query.getData().startsWith("2")){type=2;}
         if(query.getData().startsWith("3")){type=3;}
-        App.realiser.rmMemberOE(query.getMessage().getChatId(),query.getData().substring(1),type);
+        App.realiser.rmMemberOE(query.getMessage().getChatId(),query.getData().substring(2),type);
         SendMessage msg=new SendMessage();
         msg.setText("Успешно");
         InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
@@ -230,6 +233,9 @@ public static List<List<InlineKeyboardButton>> buttonsMenu =new ArrayList<>();
         msg.setReplyMarkup(kbd);
         return msg;
     }
+    //TODO создать метод запроса
+
+    //TODO оптимизация форева
     public static SendMessage subjectChooseOgeEge(CallbackQuery query){
         SendMessage msg=new SendMessage();
         msg.setText("Выберите предмет");
@@ -238,16 +244,16 @@ public static List<List<InlineKeyboardButton>> buttonsMenu =new ArrayList<>();
         List<InlineKeyboardButton> line =new ArrayList<>();
         //деление математики по уровню сложности
         if(query.getData().startsWith("2")){
-            line.add(new InlineKeyboardButton().setText("Математика").setCallbackData(query.getData() + "math"));
+            line.add(new InlineKeyboardButton().setText("Математика").setCallbackData(query.getData() + "mat"));
             buttons.add(line);
             line = new ArrayList<>();
         }
         else{
-            line.add(new InlineKeyboardButton().setText("Математика (Базовая)").setCallbackData(query.getData() + "mathb"));
+            line.add(new InlineKeyboardButton().setText("Математика (Базовая)").setCallbackData(query.getData() + "mab"));
             buttons.add(line);
             line = new ArrayList<>();
 
-            line.add(new InlineKeyboardButton().setText("Математика (Профильная)").setCallbackData(query.getData() + "mathp"));
+            line.add(new InlineKeyboardButton().setText("Математика (Профильная)").setCallbackData(query.getData() + "map"));
             buttons.add(line);
             line = new ArrayList<>();
         }
