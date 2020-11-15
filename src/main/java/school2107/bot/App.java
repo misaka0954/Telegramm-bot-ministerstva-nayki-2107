@@ -1,18 +1,60 @@
 package school2107.bot;
 
 import org.telegram.telegrambots.ApiContextInitializer;
+import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
+import school2107.bot.admin.Task;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class App {
 public static realiser realiser;
+public static ArrayList<Task> tasks = new ArrayList<Task>();
+public static EchoBot bot;
+public static Timer tmr=new Timer();
+public static TimerTask tsk=new Updator();
+
     public static void main(String[] args) throws TelegramApiRequestException {
         realiser=new realiser();
         ApiContextInitializer.init();
 
         TelegramBotsApi botsApi = new TelegramBotsApi();
-        botsApi.registerBot(new EchoBot());
+        botsApi.registerBot(bot=new EchoBot());
         Handler.mainMenu();
-
+        tmr.schedule(tsk,1000);
+        
+    }
+    public static class Updator extends TimerTask{
+        @Override
+        public void run() {
+            for(Task t:tasks){
+                if(t.eventTime.after(new Date())||t.eventTime.equals(new Date())){
+                    //TODO отправка сообщений
+                    SendMessage msg=new SendMessage();
+                    ArrayList<Long> members=new ArrayList<>();
+                    switch (t.eventCategory){
+                        case "oge":
+                            members=realiser.getMembersOE(t.subject,2);
+                            break;
+                        case "ege":
+                            members=realiser.getMembersOE(t.subject,3);
+                            break;
+                        case "ddst":
+                            members=realiser.getMembersDdst();
+                            break;
+                        case "olimps":
+                            //TODO сделать олимпиадный обработчик и таблицы
+                            return;
+                    }
+                    for(Long m:members){msg.setChatId(m);bot.sendMessage(msg);}
+                    tasks.remove(t);
+                }
+            }
+        }
     }
 }

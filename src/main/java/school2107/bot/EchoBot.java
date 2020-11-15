@@ -12,7 +12,13 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
  * Класс-обработчик поступающих к боту сообщений.
  */
 public class EchoBot extends TelegramLongPollingBot {
-
+    public void sendMessage(SendMessage msg){
+        try {
+            execute(msg);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * Метод, который возвращает токен, выданный нам ботом @BotFather.
      * @return токен

@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
 import java.util.ArrayList;
-
+//TODO добавить меню дайджеста
 public class Handler {
 public static List<List<InlineKeyboardButton>> buttonsMenu =new ArrayList<>();
     public static SendMessage mainMenu() {

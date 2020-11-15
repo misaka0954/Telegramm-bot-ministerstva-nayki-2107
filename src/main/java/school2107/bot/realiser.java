@@ -25,6 +25,16 @@ public class realiser {
     public void assertTables(){
         try {
             Statement s = connection.createStatement();
+            ResultSet rs = s.executeQuery("SELECT * FROM ddst");
+            System.out.println("Таблица Дайджестов существует");
+
+        }catch(SQLException e){
+            createTableDdst("ddst");
+            System.out.println("Таблица Дайджестов сгенерирована");
+
+        }
+        try {
+            Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery("SELECT * FROM ege");
             System.out.println("Таблица ЕГЭ существует");
 
@@ -62,6 +72,14 @@ public class realiser {
         try {
             Statement s = connection.createStatement();
             s.executeUpdate("CREATE TABLE "+name+" (uid LONG not NULL, sbt VARCHAR(3) not NULL)");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    public void createTableDdst(String name){
+        try {
+            Statement s = connection.createStatement();
+            s.executeUpdate("CREATE TABLE "+name+" (uid LONG not NULL)");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -128,5 +146,38 @@ public class realiser {
 
         }
         return false;
+    }
+    public ArrayList<Long> getMembersDdst(){
+        System.out.println("requested");
+        String table="ddst";
+        ArrayList<Long> rtn = new ArrayList<>();
+        try {
+            Statement s = connection.createStatement();
+            ResultSet rs = s.executeQuery("SELECT * FROM "+table);
+            while(rs.next()){
+                    rtn.add(rs.getLong("uid"));
+            }
+        }catch(SQLException e){ }
+        return rtn;
+    }
+    public void addMemberDdst(Long uid){
+        String table="ddst";
+
+        try {
+            Statement s = connection.createStatement();
+            s.execute("INSERT INTO "+table+" VALUES ("+uid+")");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    public void rmMemberDdst(Long uid){
+        String table="ddst";
+        try {
+            Statement s = connection.createStatement();
+
+            s.execute("DELETE FROM "+table+" WHERE UID="+uid);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 }
