@@ -26,16 +26,20 @@ public static TimerTask tsk=new Updator();
         TelegramBotsApi botsApi = new TelegramBotsApi();
         botsApi.registerBot(bot=new EchoBot());
         Handler.mainMenu();
-        tmr.schedule(tsk,1000);
+        tmr.scheduleAtFixedRate(tsk,1,10000);
         
     }
     public static class Updator extends TimerTask{
+        ArrayList<Task> list;
         @Override
         public void run() {
-            for(Task t:tasks){
-                if(t.eventTime.after(new Date())||t.eventTime.equals(new Date())){
+            this.list=App.tasks;
+            System.out.print("+");
+            for(Task t:this.list){
+                if(t.eventTime.before(new Date())||t.eventTime.equals(new Date())){
                     //TODO отправка сообщений
                     SendMessage msg=new SendMessage();
+                    msg.setText(t.message);
                     ArrayList<Long> members=new ArrayList<>();
                     switch (t.eventCategory){
                         case "oge":
@@ -52,9 +56,10 @@ public static TimerTask tsk=new Updator();
                             return;
                     }
                     for(Long m:members){msg.setChatId(m);bot.sendMessage(msg);}
-                    tasks.remove(t);
+                    this.list.remove(t);
                 }
             }
+            tasks=this.list;
         }
     }
 }
