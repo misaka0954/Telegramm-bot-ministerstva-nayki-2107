@@ -10,6 +10,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 
 import java.util.ArrayList;
 //TODO добавить меню дайджеста
+//TODO изменить убирание подписок
 public class Handler {
 public static List<List<InlineKeyboardButton>> buttonsMenu =new ArrayList<>();
     public static SendMessage mainMenu() {
@@ -41,6 +42,7 @@ public static List<List<InlineKeyboardButton>> buttonsMenu =new ArrayList<>();
     public static SendMessage router(CallbackQuery cbq) {
         String id= cbq.getData();
         if((id.startsWith("21")||id.startsWith("31"))&&id.length()>2){return subjectPushOgeEge(cbq);}
+        if((id.startsWith("22")||id.startsWith("32"))&&id.length()>2){return subjectRemoveOgeEge(cbq);}
         switch(id){
             case "0":
                 InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
@@ -185,12 +187,38 @@ public static List<List<InlineKeyboardButton>> buttonsMenu =new ArrayList<>();
         InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> buttons =new ArrayList<>();
         List<InlineKeyboardButton> line =new ArrayList<>();
-        int i=5;
-        while(i<12){
+        int i=4;
+        while(i<10){
             line.add(new InlineKeyboardButton().setText(""+i).setCallbackData(query.getData()+i));
             buttons.add(line);
             line =new ArrayList<>();
             i++;
+        }
+        line.add(new InlineKeyboardButton().setText("10").setCallbackData(query.getData()+0));
+        buttons.add(line);
+        line =new ArrayList<>();
+        line.add(new InlineKeyboardButton().setText("11").setCallbackData(query.getData()+1));
+        buttons.add(line);
+        line =new ArrayList<>();
+
+        line.add(new InlineKeyboardButton().setText("Назад в меню").setCallbackData("0"));
+        buttons.add(line);
+        kbd.setKeyboard(buttons);
+        msg.setReplyMarkup(kbd);
+        return msg;
+    }
+    public static SendMessage sbtChooser(CallbackQuery query){
+        SendMessage msg=new SendMessage();
+        msg.setText("Выберите предмет");
+        InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> buttons =new ArrayList<>();
+        List<InlineKeyboardButton> line =new ArrayList<>();
+        int i=Integer.parseInt(query.getData().substring(2));
+        for(Olimpiada o:App.olimpiads){
+            if(i==o.cls){
+            line.add(new InlineKeyboardButton().setText(o.sbt).setCallbackData(query.getData()+o.key));
+            buttons.add(line);
+            line =new ArrayList<>();}
         }
         line.add(new InlineKeyboardButton().setText("Назад в меню").setCallbackData("0"));
         buttons.add(line);
@@ -198,7 +226,9 @@ public static List<List<InlineKeyboardButton>> buttonsMenu =new ArrayList<>();
         msg.setReplyMarkup(kbd);
         return msg;
     }
+
     //TODO обьеденить методы
+
     public static SendMessage subjectPushOgeEge(CallbackQuery query){
         int type=0;
         if(query.getData().startsWith("2")){type=2;}

@@ -1,0 +1,16 @@
+2020-11-20 12:52:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "DDST" не найдена
+Table "DDST" not found; SQL statement:
+SELECT * FROM ddst [42102-200]
+2020-11-20 12:52:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "EGE" не найдена
+Table "EGE" not found; SQL statement:
+SELECT * FROM ege [42102-200]
+2020-11-20 12:52:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "OGE" не найдена
+Table "OGE" not found; SQL statement:
+SELECT * FROM oge [42102-200]
+2020-11-20 12:52:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "ERRHANDLER" не найдена
+Table "ERRHANDLER" not found; SQL statement:
+SELECT * FROM errhandler [42102-200]

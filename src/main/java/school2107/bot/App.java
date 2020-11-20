@@ -15,9 +15,12 @@ import java.util.TimerTask;
 public class App {
 public static realiser realiser;
 public static ArrayList<Task> tasks = new ArrayList<Task>();
+public static ArrayList<Olimpiada> olimpiads = new ArrayList<Olimpiada>();
 public static EchoBot bot;
 public static Timer tmr=new Timer();
 public static TimerTask tsk=new Updator();
+
+
 
     public static void main(String[] args) throws TelegramApiRequestException {
         realiser=new realiser();
@@ -27,7 +30,8 @@ public static TimerTask tsk=new Updator();
         botsApi.registerBot(bot=new EchoBot());
         Handler.mainMenu();
         tmr.scheduleAtFixedRate(tsk,1,10000);
-        
+        //TODO ремувнуть пробное добавление
+        olimpiads.add(new Olimpiada(11,"Матеша","vp","mth",1));
     }
     public static class Updator extends TimerTask{
         ArrayList<Task> list;
