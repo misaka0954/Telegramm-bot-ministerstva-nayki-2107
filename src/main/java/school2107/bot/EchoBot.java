@@ -40,7 +40,7 @@ public class EchoBot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         try {
-            //TODO создать админский интерфейс
+
             //проверяем есть ли сообщение и текстовое ли оно
             if (update.hasMessage() && update.getMessage().hasText() && !update.getMessage().getText().equalsIgnoreCase("admin mod")&&!adminsActive.contains(update.getMessage().getChatId())) {
             SendMessage msg=Handler.mainMenu();

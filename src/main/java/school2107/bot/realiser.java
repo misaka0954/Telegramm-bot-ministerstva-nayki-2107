@@ -1,5 +1,7 @@
 package school2107.bot;
 
+import school2107.bot.admin.Task;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -22,6 +24,7 @@ public class realiser {
         }
         assertTables();
     }
+
     public void assertTables(){
         try {
             Statement s = connection.createStatement();
@@ -31,6 +34,18 @@ public class realiser {
         }catch(SQLException e){
             createTableDdst("ddst");
             System.out.println("Таблица Дайджестов сгенерирована");
+
+        }
+        try {
+            Statement s = connection.createStatement();
+            ResultSet rs = s.executeQuery("SELECT * FROM task");
+            System.out.println("Таблица Ивентов существует");
+            while(rs.next()){
+                App.tasks.add(new Task(rs.getDate("dta"),rs.getString("msg"),rs.getString("cat"),rs.getInt("lvl"),rs.getString("sbt")));
+            }
+        }catch(SQLException e){
+            createTableTask("task");
+            System.out.println("Таблица Ивентов сгенерирована");
 
         }
         try {
@@ -68,6 +83,7 @@ public class realiser {
         addMemberOE(3l,"tst",0);
         rmMemberOE(1l,"tst",0);
     }
+
     public void createTableOE(String name){
         try {
             Statement s = connection.createStatement();
@@ -76,6 +92,16 @@ public class realiser {
             throwables.printStackTrace();
         }
     }
+
+    public void createTableTask(String name){
+        try {
+            Statement s = connection.createStatement();
+            s.executeUpdate("CREATE TABLE "+name+" (uid LONG not NULL,dta Date not null, sbt VARCHAR(3) not NULL,msg VARCHAR(255) not NULL,cat VARCHAR(20),lvl INT not NUll)");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
     public void createTableDdst(String name){
         try {
             Statement s = connection.createStatement();
@@ -84,6 +110,7 @@ public class realiser {
             throwables.printStackTrace();
         }
     }
+
     public void addMemberOE(Long uid, String sbt,int oe){
         String table="errhandler";
         if(oe==2){table="oge";}
@@ -96,6 +123,7 @@ public class realiser {
             throwables.printStackTrace();
         }
     }
+
     public void rmMemberOE(Long uid, String sbt,int oe){
         String table="errhandler";
         if(oe==2){table="oge";}
@@ -108,6 +136,7 @@ public class realiser {
             throwables.printStackTrace();
         }
     }
+
     public ArrayList<Long> getMembersOE(String sbt,int oe){
         System.out.println("requested");
         String table="errhandler";
@@ -128,6 +157,7 @@ public class realiser {
         }
         return rtn;
     }
+
     public boolean isMemberOE(Long uid,String sbt,int oe){
         System.out.println("check");
         String table="errhandler";
@@ -147,6 +177,7 @@ public class realiser {
         }
         return false;
     }
+
     public ArrayList<Long> getMembersDdst(){
         System.out.println("requested");
         String table="ddst";
@@ -160,9 +191,9 @@ public class realiser {
         }catch(SQLException e){ }
         return rtn;
     }
+
     public void addMemberDdst(Long uid){
         String table="ddst";
-
         try {
             Statement s = connection.createStatement();
             s.execute("INSERT INTO "+table+" VALUES ("+uid+")");
@@ -170,12 +201,35 @@ public class realiser {
             throwables.printStackTrace();
         }
     }
+
     public void rmMemberDdst(Long uid){
         String table="ddst";
         try {
             Statement s = connection.createStatement();
 
             s.execute("DELETE FROM "+table+" WHERE UID="+uid);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void addTask(Task t){
+        String table="task";
+        try {
+            Statement s = connection.createStatement();
+            s.execute("INSERT INTO "+table+" VALUES (+"+t.eventTime+","+t.subject+","+t.message+","+t.eventCategory+","+t.level+")");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void rmTask(Task t){
+        //todo удалялка ивентов
+        String table="task";
+        try {
+            Statement s = connection.createStatement();
+            s.execute("DELETE FROM "+table+" WHERE dta="+t.eventTime+" && sbt="+t.subject+" && msg="+t.message+" && cat="+t.eventCategory+" && lvl="+t.level+")");
+            //uid LONG not NULL,dta Date not null, sbt VARCHAR(3) not NULL,msg VARCHAR(255) not NULL,cat VARCHAR(20),lvl INT not NUll)
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

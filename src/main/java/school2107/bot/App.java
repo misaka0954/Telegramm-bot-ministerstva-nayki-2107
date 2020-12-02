@@ -15,7 +15,6 @@ import java.util.TimerTask;
 public class App {
 public static realiser realiser;
 public static ArrayList<Task> tasks = new ArrayList<Task>();
-public static ArrayList<Olimpiada> olimpiads = new ArrayList<Olimpiada>();
 public static EchoBot bot;
 public static Timer tmr=new Timer();
 public static TimerTask tsk=new Updator();
@@ -30,40 +29,49 @@ public static TimerTask tsk=new Updator();
         botsApi.registerBot(bot=new EchoBot());
         Handler.mainMenu();
         tmr.scheduleAtFixedRate(tsk,1,10000);
-        //TODO ремувнуть пробное добавление
-        olimpiads.add(new Olimpiada(11,"Матеша","vp","mth",1));
+        //TODO ремувнуть пробное добавление олимпиады
+
     }
     public static class Updator extends TimerTask{
-        ArrayList<Task> list;
+        public ArrayList<Task> list;
         @Override
         public void run() {
-            this.list=App.tasks;
-            System.out.print("+");
-            for(Task t:this.list){
-                if(t.eventTime.before(new Date())||t.eventTime.equals(new Date())){
-                    //TODO отправка сообщений
-                    SendMessage msg=new SendMessage();
-                    msg.setText(t.message);
-                    ArrayList<Long> members=new ArrayList<>();
-                    switch (t.eventCategory){
-                        case "oge":
-                            members=realiser.getMembersOE(t.subject,2);
-                            break;
-                        case "ege":
-                            members=realiser.getMembersOE(t.subject,3);
-                            break;
-                        case "ddst":
-                            members=realiser.getMembersDdst();
-                            break;
-                        case "olimps":
-                            //TODO сделать олимпиадный обработчик и таблицы
-                            return;
+            try {
+                this.list = App.tasks;
+                System.out.print("+");
+                for (Task t : this.list) {
+                    if (t.eventTime.before(new Date()) || t.eventTime.equals(new Date())) {
+
+                        SendMessage msg = new SendMessage();
+                        msg.setText(t.message);
+                        ArrayList<Long> members = new ArrayList<>();
+                        switch (t.eventCategory) {
+                            case "oge":
+                                members = realiser.getMembersOE(t.subject, 2);
+                                break;
+                            case "ege":
+                                members = realiser.getMembersOE(t.subject, 3);
+                                break;
+                            case "ddst":
+                                members = realiser.getMembersDdst();
+                                break;
+                            case "olimps":
+                                //TODO сделать олимпиадный обработчик и таблицы
+                                return;
+                        }
+                        for (Long m : members) {
+                            msg.setChatId(m);
+                            bot.sendMessage(msg);
+                        }
+                        this.list.remove(t);
+                        realiser.rmTask(t);
                     }
-                    for(Long m:members){msg.setChatId(m);bot.sendMessage(msg);}
-                    this.list.remove(t);
                 }
+                tasks = this.list;
+
+            } catch (Exception e) {
             }
-            tasks=this.list;
+
         }
     }
 }

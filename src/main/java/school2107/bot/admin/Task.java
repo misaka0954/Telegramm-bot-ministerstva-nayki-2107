@@ -9,32 +9,29 @@ public class Task {
     public String message;
     //огэ егэ олимпиада дайджест
     public String eventCategory;
-    //класс\\по умолчанию 0;
+    //уровень\\по умолчанию 0;значения 1-3
     public int level=0;
-    //тип олимпиады\\по умолчанию 0;
-    public int oType=0;
     //предмет\\по умолчаию null
     public String subject=null;
     //версия для дайджеста
-    Task(Date date,String message,String cat){
+    public Task(Date date,String message,String cat){
         this.eventTime=date;
         this.message=message;
         this.eventCategory=cat;
     }
     //версия огэ егэ
-    Task(Date date,String message,String cat,String subject){
+    public Task(Date date,String message,String cat,String subject){
         this.eventTime=date;
         this.message=message;
         this.eventCategory=cat;
         this.subject=subject;
     }
     //версия для олимпиады
-    Task(Date date,String message,String cat,int lvl,String subject,int tp){
+    public Task(Date date,String message,String cat,int lvl,String subject){
         this.eventTime=date;
         this.message=message;
         this.eventCategory=cat;
         this.subject=subject;
         this.level=lvl;
-        this.oType=tp;
     }
 }

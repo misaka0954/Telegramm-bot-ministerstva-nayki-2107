@@ -14,3 +14,11 @@ SELECT * FROM oge [42102-200]
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "ERRHANDLER" не найдена
 Table "ERRHANDLER" not found; SQL statement:
 SELECT * FROM errhandler [42102-200]
+2020-11-28 11:45:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "TASK" не найдена
+Table "TASK" not found; SQL statement:
+SELECT * FROM task [42102-200]
+2020-12-02 19:11:57 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "INSERT INTO TASK VALUES (+SAT FEB[*] 01 15:30:00 MSK 2020,IKT,ТЕСТОВОЕ СООБЩЕНИЕ ДЛЯ ПРОВЕРКИ ОПОВЕЩЕНИЙ,OGE,0,0)"; ожидалось "(, ., [, ::, AT, FORMAT, [, ::, AT, FORMAT, *, /, %, +, -, ||, ~, !~, NOT, LIKE, ILIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"
+Syntax error in SQL statement "INSERT INTO TASK VALUES (+SAT FEB[*] 01 15:30:00 MSK 2020,IKT,ТЕСТОВОЕ СООБЩЕНИЕ ДЛЯ ПРОВЕРКИ ОПОВЕЩЕНИЙ,OGE,0,0)"; expected "(, ., [, ::, AT, FORMAT, [, ::, AT, FORMAT, *, /, %, +, -, ||, ~, !~, NOT, LIKE, ILIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"; SQL statement:
+INSERT INTO task VALUES (+Sat Feb 01 15:30:00 MSK 2020,ikt,Тестовое сообщение для проверки оповещений,oge,0,0) [42001-200]

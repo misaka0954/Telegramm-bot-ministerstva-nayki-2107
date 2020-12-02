@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+//todo сдклать олимпиады и вкид в бд
     public class AdminHandler {
         public static int stage=0;//0 пассив.1 дата.2 сообщение.3 категория.4 предмет(если не дайджест).5 класс(если олимпиада).6 категория.
         public static Date date=new Date();
@@ -99,8 +99,9 @@ import java.util.List;
                 case "4":
                     stage=0;
                     msg.setText("категория дайджест выбрана. Успешно создано");
-                    App.tasks.add(new Task(date,message,category));
                     category="ddst";
+                    App.tasks.add(new Task(date,message,category));
+                    App.realiser.addTask(new Task(date,message,category));
                     return msg;
             }
             return msg;
@@ -110,6 +111,7 @@ import java.util.List;
             stage=0;
             subject=s.substring(1);
             App.tasks.add(new Task(date,message,category,subject));
+            App.realiser.addTask(new Task(date,message,category,subject));
             msg.setText("Успешно создано");
             return msg;
         }
@@ -154,7 +156,7 @@ import java.util.List;
             int i=0;
             task=App.tasks;
             for(Task t: task){
-            line.add(new InlineKeyboardButton().setText(t.eventCategory+" "+t.oType+" "+t.subject+" "+dt.format(t.eventTime)).setCallbackData("a2"+i));
+            line.add(new InlineKeyboardButton().setText(t.eventCategory+" "+t.subject+" "+dt.format(t.eventTime)).setCallbackData("a2"+i));
             buttons.add(line);
             line =new ArrayList<>();
             i++;
@@ -164,6 +166,7 @@ import java.util.List;
             return msg;
         }
         public static SendMessage rmCertainTask(CallbackQuery cbq){
+            App.realiser.rmTask(task.get(Integer.parseInt(cbq.getData().substring(2))));
             App.tasks.remove(task.get(Integer.parseInt(cbq.getData().substring(2))));
             SendMessage msg=new SendMessage().setText("Успешно");
             return msg;
