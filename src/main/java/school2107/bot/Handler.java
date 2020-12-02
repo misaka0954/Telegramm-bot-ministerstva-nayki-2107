@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 //TODO изменить убирание подписок
 public class Handler {
+    public static ArrayList<SubjectsFO> olimpiadsSC=new ArrayList<>();
+
 public static List<List<InlineKeyboardButton>> buttonsMenu =new ArrayList<>();
     public static SendMessage mainMenu() {
         SendMessage msg=new SendMessage();
@@ -46,6 +48,8 @@ public static List<List<InlineKeyboardButton>> buttonsMenu =new ArrayList<>();
         String id= cbq.getData();
         if((id.startsWith("21")||id.startsWith("31"))&&id.length()>2){return subjectPushOgeEge(cbq);}
         if((id.startsWith("22")||id.startsWith("32"))&&id.length()>2){return subjectRemoveOgeEge(cbq);}
+        if((id.startsWith("11")||id.startsWith("12"))&&id.length()>2){return sbtChooser(cbq);}
+        if((id.startsWith("11")||id.startsWith("12"))&&id.length()>3){return PRolimpiada(cbq);}
         switch(id){
             case "0":
                 InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
@@ -210,23 +214,22 @@ public static List<List<InlineKeyboardButton>> buttonsMenu =new ArrayList<>();
 
     public static SendMessage classChooser(CallbackQuery query){
         SendMessage msg=new SendMessage();
-        msg.setText("Выберите ваш класс");
+        msg.setText("Выберите вашу категорию:");
         InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> buttons =new ArrayList<>();
         List<InlineKeyboardButton> line =new ArrayList<>();
-        int i=4;
-        while(i<10){
-            line.add(new InlineKeyboardButton().setText(""+i).setCallbackData(query.getData()+i));
+            line.add(new InlineKeyboardButton().setText("4-6").setCallbackData(query.getData()+1));
             buttons.add(line);
             line =new ArrayList<>();
-            i++;
-        }
-        line.add(new InlineKeyboardButton().setText("10").setCallbackData(query.getData()+0));
+
+            line.add(new InlineKeyboardButton().setText("7-9").setCallbackData(query.getData()+2));
+            buttons.add(line);
+            line =new ArrayList<>();
+
+        line.add(new InlineKeyboardButton().setText("10-11").setCallbackData(query.getData()+3));
         buttons.add(line);
         line =new ArrayList<>();
-        line.add(new InlineKeyboardButton().setText("11").setCallbackData(query.getData()+1));
-        buttons.add(line);
-        line =new ArrayList<>();
+
 
         line.add(new InlineKeyboardButton().setText("Назад в меню").setCallbackData("0"));
         buttons.add(line);
@@ -242,7 +245,13 @@ public static List<List<InlineKeyboardButton>> buttonsMenu =new ArrayList<>();
         List<List<InlineKeyboardButton>> buttons =new ArrayList<>();
         List<InlineKeyboardButton> line =new ArrayList<>();
         int i=Integer.parseInt(query.getData().substring(2));
-        //todo выпил как не актуал
+        for(SubjectsFO o:olimpiadsSC){
+            if(o.checkLvl(i)){
+                line.add(new InlineKeyboardButton().setText(o.sbt).setCallbackData(query.getData()+o.sKey));
+                buttons.add(line);
+                line =new ArrayList<>();
+            }
+        }
         line.add(new InlineKeyboardButton().setText("Назад в меню").setCallbackData("0"));
         buttons.add(line);
         kbd.setKeyboard(buttons);
@@ -388,5 +397,46 @@ public static List<List<InlineKeyboardButton>> buttonsMenu =new ArrayList<>();
         kbd.setKeyboard(buttons);
         msg.setReplyMarkup(kbd);
         return msg;
+    }
+
+    public static SendMessage PRolimpiada(CallbackQuery query){
+        int type=0;
+        if(query.getData().startsWith("11")){type=1;}
+        if(query.getData().startsWith("12")){type=2;}
+        if(type==1) {
+            App.realiser.addMemberOlimpiada(query.getMessage().getChatId(), query.getData().substring(2,3),query.getData().substring(3));
+        }
+        if(type==2) {
+            App.realiser.rmMemberOlimpiada(query.getMessage().getChatId(), query.getData().substring(2,3),query.getData().substring(3));
+
+        }
+        SendMessage msg=new SendMessage();
+        msg.setText("Успешно");
+        InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> buttons =new ArrayList<>();
+        List<InlineKeyboardButton> line =new ArrayList<>();
+        line.add(new InlineKeyboardButton().setText("Назад в меню").setCallbackData("0"));
+        buttons.add(line);
+        kbd.setKeyboard(buttons);
+        msg.setReplyMarkup(kbd);
+        return msg;
+    }
+
+    public static void init(){
+        //шаблон
+        olimpiadsSC.add(new SubjectsFO(0,null,null));
+    }
+}
+class SubjectsFO{
+    int lvl;//1-3
+    String sbt;//Русский текст
+    String sKey;//ключ 3 символа
+    public SubjectsFO(int l,String s,String k){
+        this.lvl=l;
+        this.sbt=s;
+        this.sKey=k;
+    }
+    public boolean checkLvl(int l){
+        return l>=lvl;
     }
 }

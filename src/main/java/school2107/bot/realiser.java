@@ -70,6 +70,18 @@ public class realiser {
         }
         try {
             Statement s = connection.createStatement();
+            ResultSet rs = s.executeQuery("SELECT * FROM olp");
+            System.out.println("Таблица Олимпиад существует");
+
+        }catch(SQLException e){
+            createTableOE("olp");
+            System.out.println("Таблица Олимпиад сгенерирована");
+
+        }
+
+
+        try {
+            Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery("SELECT * FROM errhandler");
             System.out.println("Таблица errhandler существует");
 
@@ -78,10 +90,6 @@ public class realiser {
             System.out.println("Таблица errhander сгенерирована");
 
         }
-        addMemberOE(1l,"tst",0);
-        addMemberOE(2l,"tst",0);
-        addMemberOE(3l,"tst",0);
-        rmMemberOE(1l,"tst",0);
     }
 
     public void createTableOE(String name){
@@ -106,6 +114,15 @@ public class realiser {
         try {
             Statement s = connection.createStatement();
             s.executeUpdate("CREATE TABLE "+name+" (uid LONG not NULL)");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void createTableOlimpiada(String name){
+        try {
+            Statement s = connection.createStatement();
+            s.executeUpdate("CREATE TABLE "+name+" (uid LONG not NULL,lvl int not Null, sbt VARCHAR(3) not NULL)");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -208,6 +225,27 @@ public class realiser {
             Statement s = connection.createStatement();
 
             s.execute("DELETE FROM "+table+" WHERE UID="+uid);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void addMemberOlimpiada(Long uid, String lvl, String sbt){
+        String table="ddst";
+        try {
+            Statement s = connection.createStatement();
+            s.execute("INSERT INTO "+table+" VALUES ("+uid+","+Integer.parseInt(lvl)+",'"+sbt+"')");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void rmMemberOlimpiada(Long uid, String lvl, String sbt){
+        String table="ddst";
+        try {
+            Statement s = connection.createStatement();
+
+            s.execute("DELETE FROM "+table+" WHERE UID="+uid+" AND lvl="+Integer.parseInt(lvl)+" AND sbt='"+sbt+"'");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

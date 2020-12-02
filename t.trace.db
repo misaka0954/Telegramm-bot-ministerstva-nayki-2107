@@ -22,3 +22,7 @@ SELECT * FROM task [42102-200]
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "INSERT INTO TASK VALUES (+SAT FEB[*] 01 15:30:00 MSK 2020,IKT,ТЕСТОВОЕ СООБЩЕНИЕ ДЛЯ ПРОВЕРКИ ОПОВЕЩЕНИЙ,OGE,0,0)"; ожидалось "(, ., [, ::, AT, FORMAT, [, ::, AT, FORMAT, *, /, %, +, -, ||, ~, !~, NOT, LIKE, ILIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"
 Syntax error in SQL statement "INSERT INTO TASK VALUES (+SAT FEB[*] 01 15:30:00 MSK 2020,IKT,ТЕСТОВОЕ СООБЩЕНИЕ ДЛЯ ПРОВЕРКИ ОПОВЕЩЕНИЙ,OGE,0,0)"; expected "(, ., [, ::, AT, FORMAT, [, ::, AT, FORMAT, *, /, %, +, -, ||, ~, !~, NOT, LIKE, ILIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"; SQL statement:
 INSERT INTO task VALUES (+Sat Feb 01 15:30:00 MSK 2020,ikt,Тестовое сообщение для проверки оповещений,oge,0,0) [42001-200]
+2020-12-02 22:41:57 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "OLP" не найдена
+Table "OLP" not found; SQL statement:
+SELECT * FROM olp [42102-200]
