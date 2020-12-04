@@ -262,7 +262,7 @@ public class realiser {
     }
 
     public void rmTask(Task t){
-        //todo удалялка ивентов
+
         String table="task";
         try {
             Statement s = connection.createStatement();
