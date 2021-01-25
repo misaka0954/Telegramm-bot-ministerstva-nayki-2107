@@ -1,28 +1,60 @@
-2020-11-15 20:47:36 jdbc[3]: exception
+2020-12-20 19:15:40 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "DDST" не найдена
 Table "DDST" not found; SQL statement:
 SELECT * FROM ddst [42102-200]
-2020-11-15 20:47:36 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "EGE" не найдена
-Table "EGE" not found; SQL statement:
-SELECT * FROM ege [42102-200]
-2020-11-15 20:47:36 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "OGE" не найдена
-Table "OGE" not found; SQL statement:
-SELECT * FROM oge [42102-200]
-2020-11-15 20:47:36 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "ERRHANDLER" не найдена
-Table "ERRHANDLER" not found; SQL statement:
-SELECT * FROM errhandler [42102-200]
-2020-11-28 11:45:52 jdbc[3]: exception
+2020-12-20 19:15:40 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "TASK" не найдена
 Table "TASK" not found; SQL statement:
 SELECT * FROM task [42102-200]
-2020-12-02 19:11:57 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "INSERT INTO TASK VALUES (+SAT FEB[*] 01 15:30:00 MSK 2020,IKT,ТЕСТОВОЕ СООБЩЕНИЕ ДЛЯ ПРОВЕРКИ ОПОВЕЩЕНИЙ,OGE,0,0)"; ожидалось "(, ., [, ::, AT, FORMAT, [, ::, AT, FORMAT, *, /, %, +, -, ||, ~, !~, NOT, LIKE, ILIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"
-Syntax error in SQL statement "INSERT INTO TASK VALUES (+SAT FEB[*] 01 15:30:00 MSK 2020,IKT,ТЕСТОВОЕ СООБЩЕНИЕ ДЛЯ ПРОВЕРКИ ОПОВЕЩЕНИЙ,OGE,0,0)"; expected "(, ., [, ::, AT, FORMAT, [, ::, AT, FORMAT, *, /, %, +, -, ||, ~, !~, NOT, LIKE, ILIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"; SQL statement:
-INSERT INTO task VALUES (+Sat Feb 01 15:30:00 MSK 2020,ikt,Тестовое сообщение для проверки оповещений,oge,0,0) [42001-200]
-2020-12-02 22:41:57 jdbc[3]: exception
+2020-12-20 19:15:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "EGE" не найдена
+Table "EGE" not found; SQL statement:
+SELECT * FROM ege [42102-200]
+2020-12-20 19:15:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "OGE" не найдена
+Table "OGE" not found; SQL statement:
+SELECT * FROM oge [42102-200]
+2020-12-20 19:15:40 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "OLP" не найдена
 Table "OLP" not found; SQL statement:
 SELECT * FROM olp [42102-200]
+2020-12-20 19:15:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "ERRHANDLER" не найдена
+Table "ERRHANDLER" not found; SQL statement:
+SELECT * FROM errhandler [42102-200]
+2020-12-22 17:40:24 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "DELETE FROM TASK WHERE DTA=1580560200000 && SBT=MAT && MSG=TEST && CAT=OLIMP && LVL=1)[*]"
+Syntax error in SQL statement "DELETE FROM TASK WHERE DTA=1580560200000 && SBT=MAT && MSG=TEST && CAT=OLIMP && LVL=1)[*]"; SQL statement:
+DELETE FROM task WHERE dta=1580560200000 && sbt=mat && msg=Test && cat=olimp && lvl=1) [42000-200]
+2020-12-22 17:42:23 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Значение слишком длинное для поля "SBT VARCHAR(3)": "'02/2020 15:30' (13)"
+Value too long for column "SBT VARCHAR(3)": "'02/2020 15:30' (13)"; SQL statement:
+INSERT INTO task VALUES (1608648143334,1580560200000,'02/2020 15:30','01/02/2020 15:30','olimp',3) [22001-200]
+2020-12-22 17:42:24 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "DELETE FROM TASK WHERE DTA=1580560200000 && SBT=02/2020 15[*]:30 && MSG=01/02/2020 15:30 && CAT=OLIMP && LVL=3)"
+Syntax error in SQL statement "DELETE FROM TASK WHERE DTA=1580560200000 && SBT=02/2020 15[*]:30 && MSG=01/02/2020 15:30 && CAT=OLIMP && LVL=3)"; SQL statement:
+DELETE FROM task WHERE dta=1580560200000 && sbt=02/2020 15:30 && msg=01/02/2020 15:30 && cat=olimp && lvl=3) [42000-200]
+2020-12-22 17:46:14 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "DELETE FROM TASK WHERE DTA=1580560200000 && SBT=ISP && MSG=MSG && CAT=OGE && LVL=0)[*]"
+Syntax error in SQL statement "DELETE FROM TASK WHERE DTA=1580560200000 && SBT=ISP && MSG=MSG && CAT=OGE && LVL=0)[*]"; SQL statement:
+DELETE FROM task WHERE dta=1580560200000 && sbt=isp && msg=Msg && cat=oge && lvl=0) [42000-200]
+2020-12-22 17:52:17 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "DELETE FROM TASK WHERE DTA=1580560200000 && SBT='mat' && MSG='Test' && CAT='olimp' && LVL=1)[*]"
+Syntax error in SQL statement "DELETE FROM TASK WHERE DTA=1580560200000 && SBT='mat' && MSG='Test' && CAT='olimp' && LVL=1)[*]"; SQL statement:
+DELETE FROM task WHERE dta=1580560200000 && sbt='mat' && msg='Test' && cat='olimp' && lvl=1) [42000-200]
+2020-12-22 17:52:27 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "DELETE FROM TASK WHERE DTA=1580560200000 && SBT='isp' && MSG='Msg' && CAT='oge' && LVL=0)[*]"
+Syntax error in SQL statement "DELETE FROM TASK WHERE DTA=1580560200000 && SBT='isp' && MSG='Msg' && CAT='oge' && LVL=0)[*]"; SQL statement:
+DELETE FROM task WHERE dta=1580560200000 && sbt='isp' && msg='Msg' && cat='oge' && lvl=0) [42000-200]
+2020-12-22 17:54:31 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "DELETE FROM TASK WHERE DTA=1580560200000 AND SBT='mat' AND MSG='Test' AND CAT='olimp' AND LVL=1)[*]"
+Syntax error in SQL statement "DELETE FROM TASK WHERE DTA=1580560200000 AND SBT='mat' AND MSG='Test' AND CAT='olimp' AND LVL=1)[*]"; SQL statement:
+DELETE FROM task WHERE dta=1580560200000 and sbt='mat' and msg='Test' and cat='olimp' and lvl=1) [42000-200]
+2020-12-22 17:54:41 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "DELETE FROM TASK WHERE DTA=1580560200000 AND SBT='isp' AND MSG='Msg' AND CAT='oge' AND LVL=0)[*]"
+Syntax error in SQL statement "DELETE FROM TASK WHERE DTA=1580560200000 AND SBT='isp' AND MSG='Msg' AND CAT='oge' AND LVL=0)[*]"; SQL statement:
+DELETE FROM task WHERE dta=1580560200000 and sbt='isp' and msg='Msg' and cat='oge' and lvl=0) [42000-200]
+2020-12-22 17:55:21 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "DELETE FROM TASK WHERE DTA=1580560200000 AND SBT='mat' AND MSG='Msg' AND CAT='olimp' AND LVL=1)[*]"
+Syntax error in SQL statement "DELETE FROM TASK WHERE DTA=1580560200000 AND SBT='mat' AND MSG='Msg' AND CAT='olimp' AND LVL=1)[*]"; SQL statement:
+DELETE FROM task WHERE dta=1580560200000 and sbt='mat' and msg='Msg' and cat='olimp' and lvl=1) [42000-200]

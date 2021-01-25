@@ -18,6 +18,7 @@ public static ArrayList<Task> tasks = new ArrayList<Task>();
 public static EchoBot bot;
 public static Timer tmr=new Timer();
 public static TimerTask tsk=new Updator();
+public static String adminKey=null;
 
 
 
@@ -29,7 +30,6 @@ public static TimerTask tsk=new Updator();
         botsApi.registerBot(bot=new EchoBot());
         Handler.mainMenu();
         tmr.scheduleAtFixedRate(tsk,1,10000);
-        //TODO ремувнуть пробное добавление олимпиады
 
     }
     public static class Updator extends TimerTask{
@@ -56,8 +56,8 @@ public static TimerTask tsk=new Updator();
                                 members = realiser.getMembersDdst();
                                 break;
                             case "olimps":
-                                //TODO сделать олимпиадный обработчик и таблицы
-                                return;
+                                members=realiser.getMemberOlimpiada(t.subject,t.level);
+                                break;
                         }
                         for (Long m : members) {
                             msg.setChatId(m);

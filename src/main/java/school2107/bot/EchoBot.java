@@ -42,12 +42,12 @@ public class EchoBot extends TelegramLongPollingBot {
         try {
 
             //проверяем есть ли сообщение и текстовое ли оно
-            if (update.hasMessage() && update.getMessage().hasText() && !update.getMessage().getText().equalsIgnoreCase("admin mod")&&!adminsActive.contains(update.getMessage().getChatId())) {
+            if (update.hasMessage() && update.getMessage().hasText() && !update.getMessage().getText().equalsIgnoreCase(App.adminKey)&&!adminsActive.contains(update.getMessage().getChatId())) {
             SendMessage msg=Handler.mainMenu();
             msg.setChatId(update.getMessage().getChatId());
             execute(msg);
             }
-            if (update.hasMessage() && update.getMessage().hasText() && update.getMessage().getText().equalsIgnoreCase("admin mod")) {
+            if (update.hasMessage() && update.getMessage().hasText() && update.getMessage().getText().equalsIgnoreCase(App.adminKey)) {
                 SendMessage msg= AdminHandler.mainMenu();
                 adminsActive.add(update.getMessage().getChatId());
                 msg.setChatId(update.getMessage().getChatId());
@@ -56,12 +56,14 @@ public class EchoBot extends TelegramLongPollingBot {
             if (update.hasMessage() && update.getMessage().hasText() && update.getMessage().getText().equalsIgnoreCase("exit")) {
                 SendMessage msg= Handler.mainMenu();
                 adminsActive.remove(update.getMessage().getChatId());
+                AdminHandler.reset();
                 msg.setChatId(update.getMessage().getChatId());
                 execute(msg);
             }
             if (update.hasMessage() && update.getMessage().hasText() && adminsActive.contains(update.getMessage().getChatId())){
                 SendMessage msg=AdminHandler.msgRouter(update.getMessage().getText());
                 msg.setChatId(update.getMessage().getChatId());
+                if(msg.getText()==null){msg.setText(B.ERROR_AM);}
                 execute(msg);
             }
             if (update.hasCallbackQuery()&&update.getCallbackQuery().getId()!=null&&!update.getCallbackQuery().getData().startsWith("a")){
