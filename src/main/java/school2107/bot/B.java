@@ -36,7 +36,7 @@ public class B {
             "Разработчики:\n" +
             "Главный програмист:Иван Попов\n" +
                     "..." +
-                    "пециально для ГБОУ СОШ 2107";
+                    "специально для ГБОУ СОШ 2107";
     public static final String MAT="Математика";
     public static final String MAT_P="Математика (профильная)";
     public static final String MAT_B="Математика (базовая)";
