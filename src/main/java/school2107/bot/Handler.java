@@ -4,14 +4,12 @@ import java.util.List;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
 import java.util.ArrayList;
 
-//TODO изменить убирание подписок not real
+//TODO изменить убирание подписок
 public class Handler {
     //public static ArrayList<SubjectsFO> olimpiadsSC=new ArrayList<>();
 
@@ -43,6 +41,11 @@ public class Handler {
         line = new ArrayList<>();
         line.add(new InlineKeyboardButton().setText(B.DEVS).setCallbackData("7"));
         buttons.add(line);
+        if(App.prCa!=null&&App.prCaLink!=null){
+        line = new ArrayList<>();
+        line.add(new InlineKeyboardButton().setText(B.PR_CA).setCallbackData("8"));
+        buttons.add(line);
+        }
         kbd.setKeyboard(buttons);
         msg.setReplyMarkup(kbd);
         buttonsMenu = buttons;
@@ -94,6 +97,8 @@ public class Handler {
                 return pRddt(cbq, 0);
             case "7":
                 return devs();
+            case "8":
+                return priemnaa_comissia();
 
         }
         InlineKeyboardMarkup kbd = new InlineKeyboardMarkup();
@@ -107,6 +112,22 @@ public class Handler {
         InlineKeyboardMarkup kbd = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
         List<InlineKeyboardButton> line = new ArrayList<>();
+        line = new ArrayList<>();
+        line.add(new InlineKeyboardButton().setText(B.RTN).setCallbackData("0"));
+        buttons.add(line);
+        kbd.setKeyboard(buttons);
+        msg.setReplyMarkup(kbd);
+        return msg;
+    }
+    private static SendMessage priemnaa_comissia() {
+        SendMessage msg = new SendMessage();
+        msg.setText(App.prCa);
+        InlineKeyboardMarkup kbd = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
+        List<InlineKeyboardButton> line = new ArrayList<>();
+        line = new ArrayList<>();
+        line.add(new InlineKeyboardButton().setText("Ссылка").setUrl(App.prCaLink));
+        buttons.add(line);
         line = new ArrayList<>();
         line.add(new InlineKeyboardButton().setText(B.RTN).setCallbackData("0"));
         buttons.add(line);
@@ -272,14 +293,6 @@ public class Handler {
         InlineKeyboardMarkup kbd = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
         List<InlineKeyboardButton> line = new ArrayList<>();
-        //int i = Integer.parseInt(query.getData().substring(3));
-        /*for(SubjectsFO o:olimpiadsSC){
-            if(o.checkLvl(i)){
-                line.add(new InlineKeyboardButton().setText(o.sbt).setCallbackData(query.getData()+o.sKey));
-                buttons.add(line);
-                line =new ArrayList<>();
-            }
-        }*/
 
         line.add(new InlineKeyboardButton().setText(B.MAT).setCallbackData(query.getData() + "mat"));
         buttons.add(line);
@@ -414,74 +427,105 @@ public class Handler {
         InlineKeyboardMarkup kbd = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
         List<InlineKeyboardButton> line = new ArrayList<>();
+
+        boolean rm = false;
+        int oe=2;
+        if(query.getData().startsWith("3")){oe=3;}
+        if(query.getData().startsWith("22")||query.getData().startsWith("32")){rm=true;}
         //деление математики по уровню сложности
         if (query.getData().startsWith("2")) {
-            line.add(new InlineKeyboardButton().setText(B.MAT).setCallbackData(query.getData() + "mat"));
-            buttons.add(line);
-            line = new ArrayList<>();
+            if(App.realiser.isMemberOE(query.getMessage().getChatId(),"mat",oe)==rm) {
+                line.add(new InlineKeyboardButton().setText(B.MAT).setCallbackData(query.getData() + "mat"));
+                buttons.add(line);
+                line = new ArrayList<>();
+            }
         } else {
-            line.add(new InlineKeyboardButton().setText(B.MAT_B).setCallbackData(query.getData() + "mab"));
-            buttons.add(line);
-            line = new ArrayList<>();
+            if(App.realiser.isMemberOE(query.getMessage().getChatId(),"mab",oe)==rm) {
+                line.add(new InlineKeyboardButton().setText(B.MAT_B).setCallbackData(query.getData() + "mab"));
+                buttons.add(line);
+                line = new ArrayList<>();
+            }
+            if(App.realiser.isMemberOE(query.getMessage().getChatId(),"map",oe)==rm) {
 
-            line.add(new InlineKeyboardButton().setText(B.MAT_P).setCallbackData(query.getData() + "map"));
-            buttons.add(line);
-            line = new ArrayList<>();
+                line.add(new InlineKeyboardButton().setText(B.MAT_P).setCallbackData(query.getData() + "map"));
+                buttons.add(line);
+                line = new ArrayList<>();
+            }
         }
         if (true) {
+            if(App.realiser.isMemberOE(query.getMessage().getChatId(),"rus",oe)==rm) {
 
-            line.add(new InlineKeyboardButton().setText(B.RUS).setCallbackData(query.getData() + "rus"));
-            buttons.add(line);
-            line = new ArrayList<>();
+                line.add(new InlineKeyboardButton().setText(B.RUS).setCallbackData(query.getData() + "rus"));
+                buttons.add(line);
+                line = new ArrayList<>();
+            }
+            if(App.realiser.isMemberOE(query.getMessage().getChatId(),"lit",oe)==rm) {
 
-            line.add(new InlineKeyboardButton().setText(B.LIT).setCallbackData(query.getData() + "lit"));
-            buttons.add(line);
-            line = new ArrayList<>();
+                line.add(new InlineKeyboardButton().setText(B.LIT).setCallbackData(query.getData() + "lit"));
+                buttons.add(line);
+                line = new ArrayList<>();
+            }
+            if(App.realiser.isMemberOE(query.getMessage().getChatId(),"fiz",oe)==rm) {
+                line.add(new InlineKeyboardButton().setText(B.FIZ).setCallbackData(query.getData() + "fiz"));
+                buttons.add(line);
+                line = new ArrayList<>();
+            }
+            if(App.realiser.isMemberOE(query.getMessage().getChatId(),"him",oe)==rm) {
+                line.add(new InlineKeyboardButton().setText(B.HIM).setCallbackData(query.getData() + "him"));
+                buttons.add(line);
+                line = new ArrayList<>();
+            }
+            if(App.realiser.isMemberOE(query.getMessage().getChatId(),"bio",oe)==rm) {
+                line.add(new InlineKeyboardButton().setText(B.BIO).setCallbackData(query.getData() + "bio"));
+                buttons.add(line);
+                line = new ArrayList<>();
+            }
+            if(App.realiser.isMemberOE(query.getMessage().getChatId(),"geo",oe)==rm) {
+                line.add(new InlineKeyboardButton().setText(B.GEO).setCallbackData(query.getData() + "geo"));
+                buttons.add(line);
+                line = new ArrayList<>();
+            }
+            if(App.realiser.isMemberOE(query.getMessage().getChatId(),"ist",oe)==rm) {
+                line.add(new InlineKeyboardButton().setText(B.IST).setCallbackData(query.getData() + "ist"));
+                buttons.add(line);
+                line = new ArrayList<>();
+            }
+            if(App.realiser.isMemberOE(query.getMessage().getChatId(),"obs",oe)==rm) {
 
-            line.add(new InlineKeyboardButton().setText(B.FIZ).setCallbackData(query.getData() + "fiz"));
-            buttons.add(line);
-            line = new ArrayList<>();
+                line.add(new InlineKeyboardButton().setText(B.OBS).setCallbackData(query.getData() + "obs"));
+                buttons.add(line);
+                line = new ArrayList<>();
+            }
+            if(App.realiser.isMemberOE(query.getMessage().getChatId(),"ikt",oe)==rm) {
 
-            line.add(new InlineKeyboardButton().setText(B.HIM).setCallbackData(query.getData() + "him"));
-            buttons.add(line);
-            line = new ArrayList<>();
+                line.add(new InlineKeyboardButton().setText(B.IKT).setCallbackData(query.getData() + "ikt"));
+                buttons.add(line);
+                line = new ArrayList<>();
+            }
+            if(App.realiser.isMemberOE(query.getMessage().getChatId(),"eng",oe)==rm) {
+                line.add(new InlineKeyboardButton().setText(B.ENG).setCallbackData(query.getData() + "eng"));
+                buttons.add(line);
+                line = new ArrayList<>();
+            }
+            if(App.realiser.isMemberOE(query.getMessage().getChatId(),"nem",oe)==rm) {
+                line.add(new InlineKeyboardButton().setText(B.NEM).setCallbackData(query.getData() + "nem"));
+                buttons.add(line);
+                line = new ArrayList<>();
+            }
+            if(App.realiser.isMemberOE(query.getMessage().getChatId(),"fra",oe)==rm) {
 
-            line.add(new InlineKeyboardButton().setText(B.BIO).setCallbackData(query.getData() + "bio"));
-            buttons.add(line);
-            line = new ArrayList<>();
+                line.add(new InlineKeyboardButton().setText(B.FRA).setCallbackData(query.getData() + "fra"));
+                buttons.add(line);
+                line = new ArrayList<>();
+            }
+            if(App.realiser.isMemberOE(query.getMessage().getChatId(),"isp",oe)==rm) {
 
-            line.add(new InlineKeyboardButton().setText(B.GEO).setCallbackData(query.getData() + "geo"));
-            buttons.add(line);
-            line = new ArrayList<>();
+                line.add(new InlineKeyboardButton().setText(B.ISP).setCallbackData(query.getData() + "isp"));
+                buttons.add(line);
+                line = new ArrayList<>();
+            }
 
-            line.add(new InlineKeyboardButton().setText(B.IST).setCallbackData(query.getData() + "ist"));
-            buttons.add(line);
-            line = new ArrayList<>();
-
-            line.add(new InlineKeyboardButton().setText(B.OBS).setCallbackData(query.getData() + "obs"));
-            buttons.add(line);
-            line = new ArrayList<>();
-
-            line.add(new InlineKeyboardButton().setText(B.IKT).setCallbackData(query.getData() + "ikt"));
-            buttons.add(line);
-            line = new ArrayList<>();
-
-            line.add(new InlineKeyboardButton().setText(B.ENG).setCallbackData(query.getData() + "eng"));
-            buttons.add(line);
-            line = new ArrayList<>();
-
-            line.add(new InlineKeyboardButton().setText(B.NEM).setCallbackData(query.getData() + "nem"));
-            buttons.add(line);
-            line = new ArrayList<>();
-
-            line.add(new InlineKeyboardButton().setText(B.FRA).setCallbackData(query.getData() + "fra"));
-            buttons.add(line);
-            line = new ArrayList<>();
-
-            line.add(new InlineKeyboardButton().setText(B.ISP).setCallbackData(query.getData() + "isp"));
-            buttons.add(line);
-            line = new ArrayList<>();
-            if (query.getData().startsWith("3")) {
+            if (query.getData().startsWith("3")&&App.realiser.isMemberOE(query.getMessage().getChatId(),"kit",oe)==rm) {
                 line.add(new InlineKeyboardButton().setText(B.KIT).setCallbackData(query.getData() + "kit"));
                 buttons.add(line);
                 line = new ArrayList<>();

@@ -6,11 +6,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class realiser {
+public class Releaser {
   public static final String DB_URL="jdbc:h2:./t";
   public static final String DB_Driver="org.h2.Driver";
   public Connection connection;
-    public realiser(){
+    public Releaser(){
         try{
            Class.forName(DB_Driver);
            connection=DriverManager.getConnection(DB_URL);
@@ -21,7 +21,6 @@ public class realiser {
         }catch(SQLException e){
             System.out.print("\nsql");
             e.printStackTrace();
-
         }
         assertTables();
     }
@@ -31,7 +30,6 @@ public class realiser {
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery("SELECT * FROM ddst");
             System.out.println("Таблица Дайджестов существует");
-
         }catch(SQLException e){
             createTableDdst("ddst");
             System.out.println("Таблица Дайджестов сгенерирована");
@@ -124,15 +122,6 @@ public class realiser {
         try {
             Statement s = connection.createStatement();
             s.executeUpdate("CREATE TABLE "+name+" (uid LONG not NULL)");
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
-    public void createTableOlimpiada(String name){
-        try {
-            Statement s = connection.createStatement();
-            s.executeUpdate("CREATE TABLE "+name+" (uid LONG not NULL,lvl int not Null, sbt VARCHAR(3) not NULL)");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -269,7 +258,7 @@ public class realiser {
     }
 
     public void rmMemberOlimpiada(Long uid, String lvl, String sbt){
-        String table="ddst";
+        String table="olp";
         try {
             Statement s = connection.createStatement();
 

@@ -10,6 +10,7 @@ public class B {
     public static final String SHOOLSOURCES ="Ресурсы школы";
     public static final String LINKS ="Полезные ссыки";
     public static final String DEVS="О разработчиках";
+    public static final String PR_CA="Приемная компания";
     public static final String ACTION_ERR ="Эта функция в разработке. Выберите пункт из меню:";
     public static final String SITE ="Сайт школы";
     public static final String YT ="Ютуб старшей школы";

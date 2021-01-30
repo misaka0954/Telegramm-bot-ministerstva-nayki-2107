@@ -42,6 +42,12 @@ import java.util.List;
             line.add(new InlineKeyboardButton().setText("Удалить рассылку").setCallbackData("a2"));
             buttons.add(line);
             line =new ArrayList<>();
+            line.add(new InlineKeyboardButton().setText("Перезапись информации о пк").setCallbackData("a3"));
+            buttons.add(line);
+            line =new ArrayList<>();
+            line.add(new InlineKeyboardButton().setText("Сброс информации о приемной кампании").setCallbackData("a4"));
+            buttons.add(line);
+            line =new ArrayList<>();
 
             kbd.setKeyboard(buttons);
             msg.setReplyMarkup(kbd);
@@ -51,7 +57,6 @@ import java.util.List;
         public static SendMessage msgRouter(String s){
 
             switch(stage){
-
                 case 1:
                     return crSt1(s);
                 case 2:
@@ -60,6 +65,10 @@ import java.util.List;
                     return crSt3(s);
                 case 4:
                     return crSt4(s);
+                case -2:
+                    return crStI2(s);
+                case -1:
+                    return crStI1(s);
 
             }
             return new SendMessage().setText("для выхода введите exit");
@@ -138,6 +147,20 @@ import java.util.List;
             msg.setText("Успешно создано");
             return msg;
         }
+        public static SendMessage crStI2(String s){
+            SendMessage msg =new SendMessage();
+            stage=-1;
+            App.prCaLink=s;
+            msg.setText("Введите текст для сообщения");
+            return msg;
+        }
+        public static SendMessage crStI1(String s){
+            SendMessage msg =new SendMessage();
+            stage=0;
+            App.prCa=s;
+            msg.setText("Успешно");
+            return msg;
+        }
         public static SendMessage olimpCreate(CallbackQuery cbq){
             SendMessage msg =new SendMessage();
             stage=0;
@@ -168,6 +191,10 @@ import java.util.List;
                     return createRunner();
                 case "a2":
                     return sendRemover();
+                case "a3":
+                    return createRERunner();
+                case "a4":
+                    return clearPC();
             }
             InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
             kbd.setKeyboard(buttonsMenu);
@@ -179,6 +206,20 @@ import java.util.List;
             msg.setText("Процесс создания инициирован. Введите дату и время в формате дд/мм/гг чч:мм\n пример 01/02/2020 15:30");
             return msg;
         }
+    public static SendMessage clearPC(){
+        SendMessage msg=new SendMessage();
+        App.prCaLink=null;
+        App.prCa=null;
+        //TODO добавить очистку хранилища
+        msg.setText("Очистка завершена");
+        return msg;
+    }
+    public static SendMessage createRERunner(){
+        SendMessage msg=new SendMessage();
+        stage=-2;
+        msg.setText("Процесс изменения инициирован. Введите ссылку на сайт");
+        return msg;
+    }
 
 
         public static SendMessage sendRemover(){
