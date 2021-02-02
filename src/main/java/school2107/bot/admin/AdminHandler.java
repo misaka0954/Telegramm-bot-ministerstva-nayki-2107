@@ -5,11 +5,14 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import school2107.bot.App;
+
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-//todo сдклать олимпиады и вкид в бд
+
     public class AdminHandler {
         public static int stage=0;//0 пассив.1 дата.2 сообщение.3 категория.4 предмет(если не дайджест).5 класс(если олимпиада).6 категория.
         public static Date date=new Date();
@@ -96,7 +99,6 @@ import java.util.List;
             SendMessage msg=new SendMessage();
             switch(s){
                 case "1":
-                    //todo обработка входящих олимпиад
                     stage++;
                     msg.setText("Категория олимпиад выбрана, выберите предмет из представленных").setReplyMarkup(kbd2("a11"));
                     category="olimp";
@@ -125,7 +127,7 @@ import java.util.List;
             SendMessage msg =new SendMessage();
             stage=0;
             subject=s.substring(1);
-            if(category=="olimp"){
+            if(category == "olimp"){
                 InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
                 List<List<InlineKeyboardButton>> buttons =new ArrayList<>();
                 List<InlineKeyboardButton> line =new ArrayList<>();
@@ -158,6 +160,13 @@ import java.util.List;
             SendMessage msg =new SendMessage();
             stage=0;
             App.prCa=s;
+            try {
+                FileWriter fw = new FileWriter("pkinfo.txt");
+                fw.append(App.prCa+"\n");
+                fw.append(App.prCaLink);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             msg.setText("Успешно");
             return msg;
         }
@@ -210,7 +219,12 @@ import java.util.List;
         SendMessage msg=new SendMessage();
         App.prCaLink=null;
         App.prCa=null;
-        //TODO добавить очистку хранилища
+        try {
+            FileWriter fr = new FileWriter("pkinfo.txt");
+            fr.append("\n");
+        } catch (IOException e) {
+
+        }
         msg.setText("Очистка завершена");
         return msg;
     }
