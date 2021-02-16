@@ -18,6 +18,7 @@ public class Releaser {
 
         }catch(ClassNotFoundException e){
             System.out.print("\ncnf");
+            e.printStackTrace();
         }catch(SQLException e){
             System.out.print("\nsql");
             e.printStackTrace();
@@ -175,11 +176,9 @@ public class Releaser {
     }
 
     public boolean isMemberOE(Long uid,String sbt,int oe){
-        System.out.println("check");
         String table="errhandler";
         if(oe==2){table="oge";}
         if(oe==3){table="ege";}
-        ArrayList<Long> rtn = new ArrayList<>();
         try {
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery("SELECT * FROM "+table);
@@ -195,7 +194,6 @@ public class Releaser {
     }
 
     public ArrayList<Long> getMembersDdst(){
-        System.out.println("requested");
         String table="ddst";
         ArrayList<Long> rtn = new ArrayList<>();
         try {

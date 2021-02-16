@@ -75,10 +75,8 @@ public static String prCaLink=null;
                     }
                 }
                 tasks = this.list;
-
             } catch (Exception e) {
             }
-
         }
     }
 }
