@@ -14,7 +14,9 @@ public class Handler {
     //public static ArrayList<SubjectsFO> olimpiadsSC=new ArrayList<>();
 
     public static List<List<InlineKeyboardButton>> buttonsMenu = new ArrayList<>();
-
+    /**
+    * return Шаблон меню, Требуется указать канал отправления
+    */
     public static SendMessage mainMenu() {
         SendMessage msg = new SendMessage();
         msg.setText(B.MENU_HEADER);
@@ -51,7 +53,9 @@ public class Handler {
         buttonsMenu = buttons;
         return msg;
     }
-
+    /**
+    * @return сообщение подходящее под заданый ключ
+    */
     public static SendMessage router(CallbackQuery cbq) {
         String id = cbq.getData();
         if ((id.startsWith("21") || id.startsWith("31")) && id.length() > 2) {
@@ -105,7 +109,9 @@ public class Handler {
         kbd.setKeyboard(buttonsMenu);
         return new SendMessage().setText(B.ACTION_ERR).setReplyMarkup(kbd);
     }
-
+    /**
+     * @return сообщение про разработчиков
+     */
     private static SendMessage devs() {
         SendMessage msg = new SendMessage();
         msg.setText(B.DEVS_INFO);
@@ -119,6 +125,9 @@ public class Handler {
         msg.setReplyMarkup(kbd);
         return msg;
     }
+    /**
+     * @return сообщение о приемной комиссии
+     */
     private static SendMessage priemnaa_comissia() {
         SendMessage msg = new SendMessage();
         msg.setText(App.prCa);
@@ -135,7 +144,9 @@ public class Handler {
         msg.setReplyMarkup(kbd);
         return msg;
     }
-
+    /**
+     * @return сообщение о школьных ресурсах
+     */
     private static SendMessage schSources() {
         SendMessage msg = new SendMessage();
         msg.setText(B.SHOOLSOURCES);
@@ -157,7 +168,9 @@ public class Handler {
         msg.setReplyMarkup(kbd);
         return msg;
     }
-
+    /**
+     * @return сообщение о полезных ресурсах для подготовки
+     */
     private static SendMessage infRes() {
         SendMessage msg = new SendMessage();
         msg.setText(B.IR_HEADER);
@@ -180,7 +193,9 @@ public class Handler {
         msg.setReplyMarkup(kbd);
         return msg;
     }
-
+    /**
+     * @return сообщение о выборе предмета регистрация егэ
+     */
     private static SendMessage ege() {
         SendMessage msg = new SendMessage();
         msg.setText(B.EGE_HEADER);
@@ -200,7 +215,9 @@ public class Handler {
         msg.setReplyMarkup(kbd);
         return msg;
     }
-
+    /**
+     * @return сообщение о выборе предмета регистация огэ
+     */
     private static SendMessage oge() {
         SendMessage msg = new SendMessage();
         msg.setText(B.OGE_HEADER);
@@ -220,7 +237,9 @@ public class Handler {
         msg.setReplyMarkup(kbd);
         return msg;
     }
-
+    /**
+     * @return сообщение о регистрация на дайжесты
+     */
     private static SendMessage ddt() {
         SendMessage msg = new SendMessage();
         msg.setText(B.DDT_HEADER);
@@ -240,7 +259,7 @@ public class Handler {
         msg.setReplyMarkup(kbd);
         return msg;
     }
-
+    
     private static SendMessage olimpiads() {
         SendMessage msg = new SendMessage();
         msg.setText(B.OLP_HEADER);
