@@ -19,7 +19,7 @@ public class App {
         run();
         screen=mm;
         window.add(screen);
-        window.show();
-        screen=null;
+        window.setVisible(true);
+        screen = null;
     }
 }

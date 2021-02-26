@@ -29,7 +29,7 @@ public class Releaser {
     public void assertTables(){
         try {
             Statement s = connection.createStatement();
-            ResultSet rs = s.executeQuery("SELECT * FROM ddst");
+            s.executeQuery("SELECT * FROM ddst");
             System.out.println("Таблица Дайджестов существует");
         }catch(SQLException e){
             createTableDdst("ddst");
@@ -50,7 +50,7 @@ public class Releaser {
         }
         try {
             Statement s = connection.createStatement();
-            ResultSet rs = s.executeQuery("SELECT * FROM ege");
+            s.executeQuery("SELECT * FROM ege");
             System.out.println("Таблица ЕГЭ существует");
 
         }catch(SQLException e){
@@ -60,7 +60,7 @@ public class Releaser {
         }
         try {
             Statement s = connection.createStatement();
-            ResultSet rs = s.executeQuery("SELECT * FROM oge");
+            s.executeQuery("SELECT * FROM oge");
             System.out.println("Таблица ОГЭ существует");
 
         }catch(SQLException e){
@@ -70,7 +70,7 @@ public class Releaser {
         }
         try {
             Statement s = connection.createStatement();
-            ResultSet rs = s.executeQuery("SELECT * FROM olp");
+            s.executeQuery("SELECT * FROM olp");
             System.out.println("Таблица Олимпиад существует");
 
         }catch(SQLException e){
@@ -82,7 +82,7 @@ public class Releaser {
 
         try {
             Statement s = connection.createStatement();
-            ResultSet rs = s.executeQuery("SELECT * FROM errhandler");
+            s.executeQuery("SELECT * FROM errhandler");
             System.out.println("Таблица errhandler существует");
 
         }catch(SQLException e){
@@ -162,14 +162,14 @@ public class Releaser {
         ArrayList<Long> rtn = new ArrayList<>();
         try {
             Statement s = connection.createStatement();
-            ResultSet rs = s.executeQuery("SELECT * FROM "+table);
-            while(rs.next()){
-                if(rs.getString("sbt").equalsIgnoreCase(sbt)) {
+            ResultSet rs = s.executeQuery("SELECT * FROM " + table);
+            while (rs.next()) {
+                if (rs.getString("sbt").equalsIgnoreCase(sbt)) {
                     System.out.println(rs.getLong("uid"));
                     rtn.add(rs.getLong("uid"));
                 }
             }
-        }catch(SQLException e){
+        } catch (SQLException ignored) {
 
         }
         return rtn;
@@ -181,13 +181,15 @@ public class Releaser {
         if(oe==3){table="ege";}
         try {
             Statement s = connection.createStatement();
-            ResultSet rs = s.executeQuery("SELECT * FROM "+table);
-            while(rs.next()){
-                if(rs.getString("sbt").equalsIgnoreCase(sbt)) {
-                    if(rs.getLong("uid")==uid){return true;}
+            ResultSet rs = s.executeQuery("SELECT * FROM " + table);
+            while (rs.next()) {
+                if (rs.getString("sbt").equalsIgnoreCase(sbt)) {
+                    if (rs.getLong("uid") == uid) {
+                        return true;
+                    }
                 }
             }
-        }catch(SQLException e){
+        } catch (SQLException ignored) {
 
         }
         return false;
@@ -198,11 +200,12 @@ public class Releaser {
         ArrayList<Long> rtn = new ArrayList<>();
         try {
             Statement s = connection.createStatement();
-            ResultSet rs = s.executeQuery("SELECT * FROM "+table);
-            while(rs.next()){
-                    rtn.add(rs.getLong("uid"));
+            ResultSet rs = s.executeQuery("SELECT * FROM " + table);
+            while (rs.next()) {
+                rtn.add(rs.getLong("uid"));
             }
-        }catch(SQLException e){ }
+        } catch (SQLException ignored) {
+        }
         return rtn;
     }
 
@@ -238,7 +241,7 @@ public class Releaser {
     }
     public ArrayList<Long> getMemberOlimpiada(String sbt,int lvl){
         ArrayList<Long> rtn = new ArrayList<>();
-        Statement s = null;
+        Statement s;
         try {
             s = connection.createStatement();
         ResultSet rs = s.executeQuery("SELECT * FROM olp");
@@ -270,7 +273,7 @@ public class Releaser {
         String table="task";
         try {
             Statement s = connection.createStatement();
-            Long key=new java.util.Date().getTime();
+            long key = new java.util.Date().getTime();
             s.execute("INSERT INTO "+table+" VALUES ("+key+","+t.eventTime.getTime()+",'"+t.subject+"','"+t.message+"','"+t.eventCategory+"',"+t.level+")");
         } catch (SQLException throwables) {
             throwables.printStackTrace();

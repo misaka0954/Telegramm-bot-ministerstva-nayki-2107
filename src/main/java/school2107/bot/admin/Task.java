@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Task {
     //дата выполнения
-    public Date eventTime=new Date();
+    public Date eventTime;
     //текст сообщения
     public String message;
     //огэ егэ олимпиада дайджест

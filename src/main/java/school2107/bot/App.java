@@ -15,32 +15,61 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class App {
-public static Releaser realiser;
-public static ArrayList<Task> tasks = new ArrayList<Task>();
-public static EchoBot bot;
-public static Timer tmr=new Timer();
-public static TimerTask tsk=new Updator();
-public static String adminKey=null;
-public static String prCa=null;
-public static String prCaLink=null;
+    //Статичныей доступ к базе данных
+    public static Releaser releaser;
+    //Массив с событиями, получаемый из базы данных
+    public static ArrayList<Task> tasks = new ArrayList<>();
+    //Статичный доступ к обработчику событий
+    public static EchoBot bot;
+    //Таймер
+    public static Timer tmr = new Timer();
+    //Статичный класс вызывателя событий
+    public static TimerTask tsk = new Updater();
+    //Переменная ключа к администрированию
+    public static String adminKey = null;
+    //Переменные приемной кампании
+    public static String prCa = null;
+    //Переменные приемной кампании
+    public static String prCaLink = null;
 
+    /**
+     * Главная функция бота, инициирует его работу
+     *
+     * @param args ключ для администрирования, ввод при запуске
+     * @throws TelegramApiRequestException Стандартное исключение
+     */
     public static void main(String[] args) throws TelegramApiRequestException {
-        realiser=new Releaser();
+        //Создание доступа к базе данных и ее инициация
+        releaser = new Releaser();
+        //Базовая функция АПИ
         ApiContextInitializer.init();
-        if(args.length>0){adminKey=args[0];}
+        //загрузка ключа администрирования в переменную при ее наличии//иначе запуск без пароля и доступа кадминистрированию
+        if (args.length > 0) {
+            adminKey = args[0];
+        }
+        //Базовая функция АПИ
         TelegramBotsApi botsApi = new TelegramBotsApi();
         try {
-        BufferedReader bufferedReader = new BufferedReader(new FileReader("pkinfo.txt"));
-        prCa=bufferedReader.readLine();
-        prCaLink=bufferedReader.readLine();
-        } catch (IOException e) {
+            //Чтение информации из фаила про ПК
+            BufferedReader bufferedReader = new BufferedReader(new FileReader("pkinfo.txt"));
+            prCa = bufferedReader.readLine();
+            prCaLink = bufferedReader.readLine();
+        } catch (IOException ignored) {
         }
-        botsApi.registerBot(bot=new EchoBot());
+        //регистрация слушателя и заполнение переменной с прямым доступом к боту
+        botsApi.registerBot(bot = new EchoBot());
+        //генерация главного меню
         Handler.mainMenu();
-        tmr.scheduleAtFixedRate(tsk,1,10000);
+        //Запуск выполнятеля событий
+        tmr.scheduleAtFixedRate(tsk, 1, 10000);
     }
-    public static class Updator extends TimerTask{
+
+    /**
+     * Класс выполнятеля событий
+     */
+    public static class Updater extends TimerTask {
         public ArrayList<Task> list;
+
         @Override
         public void run() {
             try {
@@ -54,16 +83,16 @@ public static String prCaLink=null;
                         ArrayList<Long> members = new ArrayList<>();
                         switch (t.eventCategory) {
                             case "oge":
-                                members = realiser.getMembersOE(t.subject, 2);
+                                members = releaser.getMembersOE(t.subject, 2);
                                 break;
                             case "ege":
-                                members = realiser.getMembersOE(t.subject, 3);
+                                members = releaser.getMembersOE(t.subject, 3);
                                 break;
                             case "ddst":
-                                members = realiser.getMembersDdst();
+                                members = releaser.getMembersDdst();
                                 break;
                             case "olimps":
-                                members=realiser.getMemberOlimpiada(t.subject,t.level);
+                                members = releaser.getMemberOlimpiada(t.subject, t.level);
                                 break;
                         }
                         for (Long m : members) {
@@ -71,11 +100,11 @@ public static String prCaLink=null;
                             bot.sendMessage(msg);
                         }
                         this.list.remove(t);
-                        realiser.rmTask(t);
+                        releaser.rmTask(t);
                     }
                 }
                 tasks = this.list;
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
         }
     }

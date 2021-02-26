@@ -50,7 +50,6 @@ import java.util.List;
             line =new ArrayList<>();
             line.add(new InlineKeyboardButton().setText("Сброс информации о приемной кампании").setCallbackData("a4"));
             buttons.add(line);
-            line =new ArrayList<>();
 
             kbd.setKeyboard(buttons);
             msg.setReplyMarkup(kbd);
@@ -111,14 +110,14 @@ import java.util.List;
                 case "3":
                     stage++;
                     msg.setText("категория егэ выбрана,выберите предмет из представленных").setReplyMarkup(kbd(3));
-                    category="ege";
+                    category = "ege";
                     return msg;
                 case "4":
-                    stage=0;
+                    stage = 0;
                     msg.setText("категория дайджест выбрана. Успешно создано");
-                    category="ddst";
-                    App.tasks.add(new Task(date,message,category));
-                    App.realiser.addTask(new Task(date,message,category));
+                    category = "ddst";
+                    App.tasks.add(new Task(date, message, category));
+                    App.releaser.addTask(new Task(date, message, category));
                     return msg;
             }
             return msg;
@@ -127,25 +126,25 @@ import java.util.List;
             SendMessage msg =new SendMessage();
             stage=0;
             subject=s.substring(1);
-            if(category == "olimp"){
-                InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
-                List<List<InlineKeyboardButton>> buttons =new ArrayList<>();
-                List<InlineKeyboardButton> line =new ArrayList<>();
-                line.add(new InlineKeyboardButton().setText("4-6").setCallbackData("a11"+subject+1));
+            if (category.equals("olimp")) {
+                InlineKeyboardMarkup kbd = new InlineKeyboardMarkup();
+                List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
+                List<InlineKeyboardButton> line = new ArrayList<>();
+                line.add(new InlineKeyboardButton().setText("4-6").setCallbackData("a11" + subject + 1));
                 buttons.add(line);
-                line =new ArrayList<>();
+                line = new ArrayList<>();
 
-                line.add(new InlineKeyboardButton().setText("7-9").setCallbackData("a11"+subject+2));
+                line.add(new InlineKeyboardButton().setText("7-9").setCallbackData("a11" + subject + 2));
                 buttons.add(line);
-                line =new ArrayList<>();
+                line = new ArrayList<>();
 
-                line.add(new InlineKeyboardButton().setText("10-11").setCallbackData("a11"+subject+3));
+                line.add(new InlineKeyboardButton().setText("10-11").setCallbackData("a11" + subject + 3));
                 buttons.add(line);
-                line =new ArrayList<>();
                 kbd.setKeyboard(buttons);
-                return new SendMessage().setText("Выберите уровень обучения из представленных").setReplyMarkup(kbd);}
-            App.tasks.add(new Task(date,message,category,subject));
-            App.realiser.addTask(new Task(date,message,category,subject));
+                return new SendMessage().setText("Выберите уровень обучения из представленных").setReplyMarkup(kbd);
+            }
+            App.tasks.add(new Task(date, message, category, subject));
+            App.releaser.addTask(new Task(date, message, category, subject));
             msg.setText("Успешно создано");
             return msg;
         }
@@ -162,7 +161,7 @@ import java.util.List;
             App.prCa=s;
             try {
                 FileWriter fw = new FileWriter("pkinfo.txt");
-                fw.append(App.prCa+"\n");
+                fw.append(App.prCa).append("\n");
                 fw.append(App.prCaLink);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -170,12 +169,12 @@ import java.util.List;
             msg.setText("Успешно");
             return msg;
         }
-        public static SendMessage olimpCreate(CallbackQuery cbq){
-            SendMessage msg =new SendMessage();
-            stage=0;
-            stage=Integer.parseInt(cbq.getData().substring(cbq.getData().length()-1));
-            App.tasks.add(new Task(date,message,category,stage,subject.substring(2)));
-            App.realiser.addTask(new Task(date,message,category,stage,subject.substring(2)));
+        public static SendMessage olimpCreate(CallbackQuery cbq) {
+            SendMessage msg = new SendMessage();
+            stage = 0;
+            stage = Integer.parseInt(cbq.getData().substring(cbq.getData().length() - 1));
+            App.tasks.add(new Task(date, message, category, stage, subject.substring(2)));
+            App.releaser.addTask(new Task(date, message, category, stage, subject.substring(2)));
             msg.setText("Успешно создано");
             return msg;
         }
@@ -222,7 +221,7 @@ import java.util.List;
         try {
             FileWriter fr = new FileWriter("pkinfo.txt");
             fr.append("\n");
-        } catch (IOException e) {
+        } catch (IOException ignored) {
 
         }
         msg.setText("Очистка завершена");
@@ -255,10 +254,9 @@ import java.util.List;
             return msg;
         }
         public static SendMessage rmCertainTask(CallbackQuery cbq){
-            App.realiser.rmTask(task.get(Integer.parseInt(cbq.getData().substring(2))));
+            App.releaser.rmTask(task.get(Integer.parseInt(cbq.getData().substring(2))));
             App.tasks.remove(task.get(Integer.parseInt(cbq.getData().substring(2))));
-            SendMessage msg=new SendMessage().setText("Успешно");
-            return msg;
+            return new SendMessage().setText("Успешно");
         }
         
         public static InlineKeyboardMarkup kbd(int lvl){
@@ -267,93 +265,17 @@ import java.util.List;
             List<InlineKeyboardButton> line =new ArrayList<>();
             String prefix="a";
             //деление математики по уровню сложности
-            if(lvl==2){
+            if (lvl == 2) {
                 line.add(new InlineKeyboardButton().setText("Математика").setCallbackData(prefix + "mat"));
-                buttons.add(line);
-                line = new ArrayList<>();
-            }
-            else{
+            } else {
                 line.add(new InlineKeyboardButton().setText("Математика (Базовая)").setCallbackData(prefix + "mab"));
                 buttons.add(line);
                 line = new ArrayList<>();
 
                 line.add(new InlineKeyboardButton().setText("Математика (Профильная)").setCallbackData(prefix + "map"));
-                buttons.add(line);
-                line = new ArrayList<>();
             }
-            if(true) {
-
-                line.add(new InlineKeyboardButton().setText("Русский язык").setCallbackData(prefix + "rus"));
-                buttons.add(line);
-                line = new ArrayList<>();
-
-                line.add(new InlineKeyboardButton().setText("Литература").setCallbackData(prefix + "lit"));
-                buttons.add(line);
-                line = new ArrayList<>();
-
-                line.add(new InlineKeyboardButton().setText("Физика").setCallbackData(prefix + "fiz"));
-                buttons.add(line);
-                line = new ArrayList<>();
-
-                line.add(new InlineKeyboardButton().setText("Химия").setCallbackData(prefix + "him"));
-                buttons.add(line);
-                line = new ArrayList<>();
-
-                line.add(new InlineKeyboardButton().setText("Биология").setCallbackData(prefix + "bio"));
-                buttons.add(line);
-                line = new ArrayList<>();
-
-                line.add(new InlineKeyboardButton().setText("География").setCallbackData(prefix + "geo"));
-                buttons.add(line);
-                line = new ArrayList<>();
-
-                line.add(new InlineKeyboardButton().setText("История").setCallbackData(prefix + "ist"));
-                buttons.add(line);
-                line = new ArrayList<>();
-
-                line.add(new InlineKeyboardButton().setText("Обществознание").setCallbackData(prefix + "obs"));
-                buttons.add(line);
-                line = new ArrayList<>();
-
-                line.add(new InlineKeyboardButton().setText("Информатика и ИКТ").setCallbackData(prefix + "ikt"));
-                buttons.add(line);
-                line = new ArrayList<>();
-
-                line.add(new InlineKeyboardButton().setText("Английский язык").setCallbackData(prefix + "eng"));
-                buttons.add(line);
-                line = new ArrayList<>();
-
-                line.add(new InlineKeyboardButton().setText("Немецкий язык").setCallbackData(prefix + "nem"));
-                buttons.add(line);
-                line = new ArrayList<>();
-
-                line.add(new InlineKeyboardButton().setText("Французский язык").setCallbackData(prefix + "fra"));
-                buttons.add(line);
-                line = new ArrayList<>();
-
-                line.add(new InlineKeyboardButton().setText("Испанский язык").setCallbackData(prefix + "isp"));
-                buttons.add(line);
-                line = new ArrayList<>();
-                if(lvl==3){
-                    line.add(new InlineKeyboardButton().setText("Китайский язык").setCallbackData(prefix + "kit"));
-                    buttons.add(line);
-                    line = new ArrayList<>();}
-
-            }
-
-
-            kbd.setKeyboard(buttons);
-            return kbd;
-        }
-        public static InlineKeyboardMarkup kbd2(String cbq){
-        InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
-        List<List<InlineKeyboardButton>> buttons =new ArrayList<>();
-        List<InlineKeyboardButton> line =new ArrayList<>();
-        String prefix=cbq;
-            line.add(new InlineKeyboardButton().setText("Математика").setCallbackData(prefix + "mat"));
             buttons.add(line);
             line = new ArrayList<>();
-
 
             line.add(new InlineKeyboardButton().setText("Русский язык").setCallbackData(prefix + "rus"));
             buttons.add(line);
@@ -406,14 +328,81 @@ import java.util.List;
             line.add(new InlineKeyboardButton().setText("Испанский язык").setCallbackData(prefix + "isp"));
             buttons.add(line);
             line = new ArrayList<>();
-
+            if (lvl == 3) {
                 line.add(new InlineKeyboardButton().setText("Китайский язык").setCallbackData(prefix + "kit"));
                 buttons.add(line);
-                line = new ArrayList<>();
+            }
 
 
+            kbd.setKeyboard(buttons);
+            return kbd;
+        }
+        public static InlineKeyboardMarkup kbd2(String cbq){
+        InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> buttons =new ArrayList<>();
+        List<InlineKeyboardButton> line =new ArrayList<>();
+            line.add(new InlineKeyboardButton().setText("Математика").setCallbackData(cbq + "mat"));
+            buttons.add(line);
+            line = new ArrayList<>();
 
-        kbd.setKeyboard(buttons);
+
+            line.add(new InlineKeyboardButton().setText("Русский язык").setCallbackData(cbq + "rus"));
+            buttons.add(line);
+            line = new ArrayList<>();
+
+            line.add(new InlineKeyboardButton().setText("Литература").setCallbackData(cbq + "lit"));
+            buttons.add(line);
+            line = new ArrayList<>();
+
+            line.add(new InlineKeyboardButton().setText("Физика").setCallbackData(cbq + "fiz"));
+            buttons.add(line);
+            line = new ArrayList<>();
+
+            line.add(new InlineKeyboardButton().setText("Химия").setCallbackData(cbq + "him"));
+            buttons.add(line);
+            line = new ArrayList<>();
+
+            line.add(new InlineKeyboardButton().setText("Биология").setCallbackData(cbq + "bio"));
+            buttons.add(line);
+            line = new ArrayList<>();
+
+            line.add(new InlineKeyboardButton().setText("География").setCallbackData(cbq + "geo"));
+            buttons.add(line);
+            line = new ArrayList<>();
+
+            line.add(new InlineKeyboardButton().setText("История").setCallbackData(cbq + "ist"));
+            buttons.add(line);
+            line = new ArrayList<>();
+
+            line.add(new InlineKeyboardButton().setText("Обществознание").setCallbackData(cbq + "obs"));
+            buttons.add(line);
+            line = new ArrayList<>();
+
+            line.add(new InlineKeyboardButton().setText("Информатика и ИКТ").setCallbackData(cbq + "ikt"));
+            buttons.add(line);
+            line = new ArrayList<>();
+
+            line.add(new InlineKeyboardButton().setText("Английский язык").setCallbackData(cbq + "eng"));
+            buttons.add(line);
+            line = new ArrayList<>();
+
+            line.add(new InlineKeyboardButton().setText("Немецкий язык").setCallbackData(cbq + "nem"));
+            buttons.add(line);
+            line = new ArrayList<>();
+
+            line.add(new InlineKeyboardButton().setText("Французский язык").setCallbackData(cbq + "fra"));
+            buttons.add(line);
+            line = new ArrayList<>();
+
+            line.add(new InlineKeyboardButton().setText("Испанский язык").setCallbackData(cbq + "isp"));
+            buttons.add(line);
+            line = new ArrayList<>();
+
+            line.add(new InlineKeyboardButton().setText("Китайский язык").setCallbackData(cbq + "kit"));
+            buttons.add(line);
+
+
+            kbd.setKeyboard(buttons);
         return kbd;
     }
         
