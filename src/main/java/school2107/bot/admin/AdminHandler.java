@@ -14,51 +14,90 @@ import java.util.Date;
 import java.util.List;
 
     public class AdminHandler {
+        /**
+         * Стадия работы с заполнятелем задания
+         */
         public static int stage=0;//0 пассив.1 дата.2 сообщение.3 категория.4 предмет(если не дайджест).5 класс(если олимпиада).6 категория.
+        /**Переменная даты для заполнятеля*/
         public static Date date=new Date();
+        /**Соопщение для заполнятеля*/
         public static String message;
+        /**
+         * Категория для заполнятеля
+         */
         public static String category;
+        /**
+         * Предмет для заполнятеля
+         */
         public static String subject;
-        public static int level=0;
-        public static int typeO=0;
-        public static SimpleDateFormat dt=new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        /**
+         * Уровень для заполнятеля
+         */
+        public static int level = 0;
+        public static int typeO = 0;
+        /**
+         * Шаблон для получения даты
+         */
+        public static SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        /**
+         * Хранилище кнопок админ меню
+         */
+        public static List<List<InlineKeyboardButton>> buttonsMenu = new ArrayList<>();
+        /**
+         * Массив заданий для удаления
+         */
+        static ArrayList<Task> task = null;
 
-        static ArrayList<Task> task=null;
-        public static void reset(){
-            stage=0;
-            level=0;
-            typeO=0;
-            message=null;
-            category=null;
-            subject=null;
+        /**
+         * Сброс заполнятеля
+         */
+        public static void reset() {
+            stage = 0;
+            level = 0;
+            typeO = 0;
+            message = null;
+            category = null;
+            subject = null;
         }
-        public static List<List<InlineKeyboardButton>> buttonsMenu =new ArrayList<>();
+
+        /**
+         * Вызов главного меню
+         *
+         * @return сообщение с кнопками для отправки. Не имеет прикрепленного чата.
+         */
         public static SendMessage mainMenu() {
-            SendMessage msg=new SendMessage();
+            SendMessage msg = new SendMessage();
             msg.setText("Админское меню");
-            InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
-            List<InlineKeyboardButton> line =new ArrayList<>();
-            List<List<InlineKeyboardButton>> buttons =new ArrayList<>();
+            InlineKeyboardMarkup kbd = new InlineKeyboardMarkup();
+            List<InlineKeyboardButton> line = new ArrayList<>();
+            List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
             line.add(new InlineKeyboardButton().setText("Создать рассылку").setCallbackData("a1"));
             buttons.add(line);
-            line =new ArrayList<>();
+            line = new ArrayList<>();
             line.add(new InlineKeyboardButton().setText("Удалить рассылку").setCallbackData("a2"));
             buttons.add(line);
             line =new ArrayList<>();
             line.add(new InlineKeyboardButton().setText("Перезапись информации о пк").setCallbackData("a3"));
             buttons.add(line);
-            line =new ArrayList<>();
+            line = new ArrayList<>();
             line.add(new InlineKeyboardButton().setText("Сброс информации о приемной кампании").setCallbackData("a4"));
             buttons.add(line);
 
             kbd.setKeyboard(buttons);
             msg.setReplyMarkup(kbd);
-            buttonsMenu=buttons;
+            buttonsMenu = buttons;
             return msg;
         }
-        public static SendMessage msgRouter(String s){
 
-            switch(stage){
+        /**
+         * Распределитель сообщений по слушателям заполнятеля
+         *
+         * @param s параметр для слушателей
+         * @return сообщение полученое от слушателя
+         */
+        public static SendMessage msgRouter(String s) {
+
+            switch (stage) {
                 case 1:
                     return crSt1(s);
                 case 2:
@@ -75,28 +114,49 @@ import java.util.List;
             }
             return new SendMessage().setText("для выхода введите exit");
         }
-        public static SendMessage crSt1(String s){
-            SendMessage msg=new SendMessage();
-            try{
-                date=dt.parse(s);
-            }catch(Exception e){
+
+        /**
+         * Обработчик даты
+         *
+         * @param s строка для преобразования
+         * @return сообщение об успехе сперебросом далее или сообщение об ошибке и повторный запрос
+         */
+        public static SendMessage crSt1(String s) {
+            SendMessage msg = new SendMessage();
+            try {
+                date = dt.parse(s);
+            } catch (Exception e) {
                 msg.setText("Ошибка в преобразовании даты. Попробуйте еще раз");
                 return msg;
             }
             stage++;
-            msg.setText("Дата успешно установлена на "+dt.format(date)+"\nВведите сообщение которое будет выведено");
+            msg.setText("Дата успешно установлена на " + dt.format(date) + "\nВведите сообщение которое будет выведено");
             return msg;
         }
-        public static SendMessage crSt2(String s){
-            SendMessage msg=new SendMessage();
-            message=s;
+
+        /**
+         * Слушатель заполнятеля, устанавливает сообщение
+         *
+         * @param s Сообщение для установки
+         * @return сообщение об успехе
+         */
+        public static SendMessage crSt2(String s) {
+            SendMessage msg = new SendMessage();
+            message = s;
             stage++;
-            msg.setText("Сообщение успешно установлено как:\""+message+"\"\nВведите категорию сообщения:\n1 олимпиада\n2 огэ\n3 егэ\n4 дайджест\n для совершения выбора требуется ввести ТОЛЬКО цифру");
+            msg.setText("Сообщение успешно установлено как:\"" + message + "\"\nВведите категорию сообщения:\n1 олимпиада\n2 огэ\n3 егэ\n4 дайджест\n для совершения выбора требуется ввести ТОЛЬКО цифру");
             return msg;
         }
-        public static SendMessage crSt3(String s){
-            SendMessage msg=new SendMessage();
-            switch(s){
+
+        /**
+         * Слушатель установки категории
+         *
+         * @param s строка категории(1-4)
+         * @return сообщение об успехе\запрос на повторный ввод
+         */
+        public static SendMessage crSt3(String s) {
+            SendMessage msg = new SendMessage();
+            switch (s) {
                 case "1":
                     stage++;
                     msg.setText("Категория олимпиад выбрана, выберите предмет из представленных").setReplyMarkup(kbd2("a11"));
@@ -122,10 +182,17 @@ import java.util.List;
             }
             return msg;
         }
-        public static SendMessage crSt4(String s){
-            SendMessage msg =new SendMessage();
-            stage=0;
-            subject=s.substring(1);
+
+        /**
+         * Для олимпиад
+         *
+         * @param s выбранный предмет
+         * @return сообщение на выбор уровня обучения
+         */
+        public static SendMessage crSt4(String s) {
+            SendMessage msg = new SendMessage();
+            stage = 0;
+            subject = s.substring(1);
             if (category.equals("olimp")) {
                 InlineKeyboardMarkup kbd = new InlineKeyboardMarkup();
                 List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
@@ -148,17 +215,31 @@ import java.util.List;
             msg.setText("Успешно создано");
             return msg;
         }
-        public static SendMessage crStI2(String s){
-            SendMessage msg =new SendMessage();
-            stage=-1;
-            App.prCaLink=s;
+
+        /**
+         * Генератор приемной кампании
+         *
+         * @param s ссылка
+         * @return запрос на текст
+         */
+        public static SendMessage crStI2(String s) {
+            SendMessage msg = new SendMessage();
+            stage = -1;
+            App.prCaLink = s;
             msg.setText("Введите текст для сообщения");
             return msg;
         }
-        public static SendMessage crStI1(String s){
-            SendMessage msg =new SendMessage();
-            stage=0;
-            App.prCa=s;
+
+        /**
+         * Выгрузка в фаил приемной кампании
+         *
+         * @param s текст сообщения про Приемную кампанию
+         * @return сообщение об успехе
+         */
+        public static SendMessage crStI1(String s) {
+            SendMessage msg = new SendMessage();
+            stage = 0;
+            App.prCa = s;
             try {
                 FileWriter fw = new FileWriter("pkinfo.txt");
                 fw.append(App.prCa).append("\n");
@@ -169,6 +250,13 @@ import java.util.List;
             msg.setText("Успешно");
             return msg;
         }
+
+        /**
+         * Вызов создавателя олимпиад
+         *
+         * @param cbq ключ кнопки
+         * @return сообщение об успехе
+         */
         public static SendMessage olimpCreate(CallbackQuery cbq) {
             SendMessage msg = new SendMessage();
             stage = 0;
@@ -179,14 +267,21 @@ import java.util.List;
             return msg;
         }
 
-
-
-
+        /**
+         * Распределитель нажатий на кнопки
+         *
+         * @param cbq код возврата
+         * @return результаты нажатий на кнопки
+         */
         public static SendMessage router(CallbackQuery cbq) {
-            String id= cbq.getData();
-            if(id.length()>6){return olimpCreate(cbq);}
-            if(id.length()>2&&id.startsWith("a2")){return rmCertainTask(cbq);}
-            if(id.length()>3){
+            String id = cbq.getData();
+            if (id.length() > 6) {
+                return olimpCreate(cbq);
+            }
+            if (id.length() > 2 && id.startsWith("a2")) {
+                return rmCertainTask(cbq);
+            }
+            if (id.length() > 3) {
                 return crSt4(cbq.getData());
             }
 
@@ -204,66 +299,101 @@ import java.util.List;
                 case "a4":
                     return clearPC();
             }
-            InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
+            InlineKeyboardMarkup kbd = new InlineKeyboardMarkup();
             kbd.setKeyboard(buttonsMenu);
             return new SendMessage().setText("Эта функция в разработке. Выберите пункт из меню:").setReplyMarkup(kbd);
         }
-        public static SendMessage createRunner(){
-            SendMessage msg=new SendMessage();
+
+        /**
+         * Вызов заплнятеля
+         *
+         * @return первая стадия заполнятеля
+         */
+        public static SendMessage createRunner() {
+            SendMessage msg = new SendMessage();
             stage++;
             msg.setText("Процесс создания инициирован. Введите дату и время в формате дд/мм/гг чч:мм\n пример 01/02/2020 15:30");
             return msg;
         }
-    public static SendMessage clearPC(){
-        SendMessage msg=new SendMessage();
-        App.prCaLink=null;
-        App.prCa=null;
-        try {
-            FileWriter fr = new FileWriter("pkinfo.txt");
-            fr.append("\n");
-        } catch (IOException ignored) {
 
+        /**
+         * очистка приемной кампании
+         *
+         * @return
+         */
+        public static SendMessage clearPC() {
+            SendMessage msg = new SendMessage();
+            App.prCaLink = null;
+            App.prCa = null;
+            try {
+                FileWriter fr = new FileWriter("pkinfo.txt");
+                fr.append("\n");
+            } catch (IOException ignored) {
+
+            }
+            msg.setText("Очистка завершена");
+            return msg;
         }
-        msg.setText("Очистка завершена");
-        return msg;
-    }
-    public static SendMessage createRERunner(){
-        SendMessage msg=new SendMessage();
-        stage=-2;
-        msg.setText("Процесс изменения инициирован. Введите ссылку на сайт");
-        return msg;
-    }
 
+        /**
+         * Запуск изменения информации о приемной кампании
+         *
+         * @return
+         */
+        public static SendMessage createRERunner() {
+            SendMessage msg = new SendMessage();
+            stage = -2;
+            msg.setText("Процесс изменения инициирован. Введите ссылку на сайт");
+            return msg;
+        }
 
-        public static SendMessage sendRemover(){
-            SendMessage msg=new SendMessage();
+        /**
+         * Диалог удаления события
+         *
+         * @return клавиатура с требуемыми кнопками
+         */
+        public static SendMessage sendRemover() {
+            SendMessage msg = new SendMessage();
             msg.setText("Выберите удаляемое сообщение");
-            InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
-            List<InlineKeyboardButton> line =new ArrayList<>();
-            List<List<InlineKeyboardButton>> buttons =new ArrayList<>();
-            int i=0;
-            task=App.tasks;
-            for(Task t: task){
-            line.add(new InlineKeyboardButton().setText(t.eventCategory+" "+t.subject+" "+dt.format(t.eventTime)).setCallbackData("a2"+i));
-            buttons.add(line);
-            line =new ArrayList<>();
-            i++;
+            InlineKeyboardMarkup kbd = new InlineKeyboardMarkup();
+            List<InlineKeyboardButton> line = new ArrayList<>();
+            List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
+            int i = 0;
+            task = App.tasks;
+            for (Task t : task) {
+                line.add(new InlineKeyboardButton().setText(t.eventCategory + " " + t.subject + " " + dt.format(t.eventTime)).setCallbackData("a2" + i));
+                buttons.add(line);
+                line = new ArrayList<>();
+                i++;
             }
             kbd.setKeyboard(buttons);
             msg.setReplyMarkup(kbd);
             return msg;
         }
-        public static SendMessage rmCertainTask(CallbackQuery cbq){
+
+        /**
+         * Удаление конкретного задания
+         *
+         * @param cbq ID задания
+         * @return сообщение об успехе
+         */
+        public static SendMessage rmCertainTask(CallbackQuery cbq) {
             App.releaser.rmTask(task.get(Integer.parseInt(cbq.getData().substring(2))));
             App.tasks.remove(task.get(Integer.parseInt(cbq.getData().substring(2))));
             return new SendMessage().setText("Успешно");
         }
-        
-        public static InlineKeyboardMarkup kbd(int lvl){
-            InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
-            List<List<InlineKeyboardButton>> buttons =new ArrayList<>();
-            List<InlineKeyboardButton> line =new ArrayList<>();
-            String prefix="a";
+
+        /**
+         * клавиатура для ОГЭ и ЕГЭ
+         *
+         * @param lvl уровень(2 огэ. 3 егэ)
+         * @return Клавиатура
+         */
+        public static InlineKeyboardMarkup kbd(int lvl) {
+            InlineKeyboardMarkup kbd = new InlineKeyboardMarkup();
+            List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
+            List<InlineKeyboardButton> line = new ArrayList<>();
+            String prefix = "a";
             //деление математики по уровню сложности
             if (lvl == 2) {
                 line.add(new InlineKeyboardButton().setText("Математика").setCallbackData(prefix + "mat"));
@@ -337,10 +467,17 @@ import java.util.List;
             kbd.setKeyboard(buttons);
             return kbd;
         }
-        public static InlineKeyboardMarkup kbd2(String cbq){
-        InlineKeyboardMarkup kbd=new InlineKeyboardMarkup();
-        List<List<InlineKeyboardButton>> buttons =new ArrayList<>();
-        List<InlineKeyboardButton> line =new ArrayList<>();
+
+        /**
+         * Коавиатура для олимпиад
+         *
+         * @param cbq предыдущее значение
+         * @return клавиатура
+         */
+        public static InlineKeyboardMarkup kbd2(String cbq) {
+            InlineKeyboardMarkup kbd = new InlineKeyboardMarkup();
+            List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
+            List<InlineKeyboardButton> line = new ArrayList<>();
             line.add(new InlineKeyboardButton().setText("Математика").setCallbackData(cbq + "mat"));
             buttons.add(line);
             line = new ArrayList<>();
