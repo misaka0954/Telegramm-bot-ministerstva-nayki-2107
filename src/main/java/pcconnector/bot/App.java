@@ -1,6 +1,6 @@
 package pcconnector.bot;
 
-import pcconnector.bot.frames.MainMenu;
+import pcconnector.bot.frames.LoginMenu;
 
 import javax.swing.*;
 
@@ -8,7 +8,7 @@ public class App {
     public static JFrame window = new JFrame("BOT CONNECTOR");
     public static JPanel screen = new JPanel();
 
-    public static MainMenu mm = new MainMenu();
+    public static LoginMenu mm = new LoginMenu();
 
     public static void run(){
         window.setSize(500,500);
