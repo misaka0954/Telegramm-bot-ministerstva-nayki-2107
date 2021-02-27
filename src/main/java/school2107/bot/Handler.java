@@ -14,8 +14,8 @@ public class Handler {
 
     public static List<List<InlineKeyboardButton>> buttonsMenu = new ArrayList<>();
     /**
-    * return Шаблон меню, Требуется указать канал отправления
-    */
+     * @return Шаблон меню, Требуется указать канал отправления
+     */
     public static SendMessage mainMenu() {
         SendMessage msg = new SendMessage();
         msg.setText(B.MENU_HEADER);
