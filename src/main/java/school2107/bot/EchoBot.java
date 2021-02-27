@@ -14,7 +14,9 @@ import java.util.ArrayList;
  */
 public class EchoBot extends TelegramLongPollingBot {
 
-    //Список активных администраторов
+    /**
+     * Список активных администраторов
+     */
     public static ArrayList<Long> adminsActive = new ArrayList<>();
 
     /**
@@ -40,15 +42,16 @@ public class EchoBot extends TelegramLongPollingBot {
         }
     }
 
-    @Override
-    /*
-      Метод-обработчик поступающих сообщений.
-      @param update объект, содержащий информацию о входящем сообщении
+    /**
+     * Метод-обработчик поступающих сообщений.
+     *
+     * @param update объект, содержащий информацию о входящем сообщении
      */
+    @Override
     public void onUpdateReceived(Update update) {
         try {
             //Вызов главного меню
-            if (update.hasMessage() && update.getMessage().hasText() && !update.getMessage().getText().equalsIgnoreCase(App.adminKey)&&!adminsActive.contains(update.getMessage().getChatId())) {
+            if (update.hasMessage() && update.getMessage().hasText() && !update.getMessage().getText().equalsIgnoreCase(App.adminKey) && !adminsActive.contains(update.getMessage().getChatId())) {
                 SendMessage msg = Handler.mainMenu();
                 msg.setChatId(update.getMessage().getChatId());
                 execute(msg);

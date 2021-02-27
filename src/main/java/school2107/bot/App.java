@@ -15,21 +15,33 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class App {
-    //Статичныей доступ к базе данных
+    /**
+     * Статичный доступ к БД
+     */
     public static Releaser releaser;
-    //Массив с событиями, получаемый из базы данных
+    /**
+     * Массив с событиями, получаемый из базы данных
+     */
     public static ArrayList<Task> tasks = new ArrayList<>();
-    //Статичный доступ к обработчику событий
+    /**
+     * Статичный доступ к обработчику событий
+     */
     public static EchoBot bot;
-    //Таймер
+    /**
+     * Таймер
+     */
     public static Timer tmr = new Timer();
-    //Статичный класс вызывателя событий
+    /**
+     * Статичный класс вызывателя событий
+     */
     public static TimerTask tsk = new Updater();
-    //Переменная ключа к администрированию
+    /**
+     * Переменная ключа к администрированию
+     */
     public static String adminKey = null;
-    //Переменные приемной кампании
+    /**Переменные приемной кампании*/
     public static String prCa = null;
-    //Переменные приемной кампании
+    /**Переменные приемной кампании*/
     public static String prCaLink = null;
 
     /**

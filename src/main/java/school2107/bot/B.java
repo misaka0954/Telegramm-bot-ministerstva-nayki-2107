@@ -1,5 +1,8 @@
 package school2107.bot;
 
+/**
+ * Класс с текстами для кнопок и сообщений
+ */
 public class B {
     public static final String ERROR_AM="Произошла ошибка, пожалуйста презайдите в меню.";
     public static final String MENU_HEADER="Главное меню";
@@ -35,7 +38,7 @@ public class B {
 
     public static final String DEVS_INFO=
             "Разработчики:\n" +
-            "Главный програмист:Иван Попов\n" +
+                    "Главный програмист:Иван Попов\n" +
                     "..." +
                     "специально для ГБОУ СОШ 2107";
     public static final String MAT="Математика";
